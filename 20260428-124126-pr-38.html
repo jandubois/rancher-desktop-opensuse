@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260428-124126-pr-38</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260428-124126-pr-38</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-28 12:41</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse">rancher-sandbox/rancher-desktop-opensuse</a></td></tr>
+      <tr><td>Round</td><td>1 (of pr-38)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/Nino-K">@Nino-K</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/pull/38" class="gh-ref" data-title="Add guestagent and networking" data-state="open" data-type="pr">#38</a> — Add guestagent and networking</td></tr>
+      <tr><td>Branch</td><td><code>add-guestagent-and-networking</code></td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/d0c0b8e44"><code>d0c0b8e44</code></a> Build guestagent and networking from local sources<br><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/5449268d9"><code>5449268d9</code></a> Merge src/go/guestagent and src/go/networking from rancher-desktop</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; Dockerfile rewrite and vendoring strategy are sound; tighten the supporting structure (overview, tests, dead Windows tree) and triage the inherited bugs the imports surface.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>15 min 55 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>This PR vendors <code>src/go/guestagent</code> and <code>src/go/networking</code> (filter-repo&#39;d from <code>rancher-desktop@c8cd431</code>, ~494 commits) into the repo and rewires the Dockerfile to build the four VM binaries from local sources instead of cloning upstream. The mechanical change — <code>git clone … rancher-desktop</code> removed; <code>COPY src /rd</code> plus per-module <code>WORKDIR + go build</code> blocks — is correct and removes the only network egress from Stage 1 of the image build. The cost is structural: this repo now owns the imported source, but the supporting machinery (CI test invocation, repo overview, dead Windows-host tree) does not yet reflect that ownership.</p>
+    <p>The reviews surface two categories of findings. <strong>PR-specific structural issues</strong> (I1–I3): the project&#39;s own steering text contradicts the new layout, the ~1250 lines of imported tests have no signal in this repo, and the Windows host-side <code>cmd/host/</code> tree plus its winio/hvsock dependencies are vendored but never built. <strong>Inherited bugs in the imported code</strong> (I4–I12): a <code>RemoveAll</code> path that drops UDP protocol info, an inverted <code>isTimeout</code> predicate, a <code>go vet</code> failure that breaks <code>go test ./...</code> on Linux, port-keyed maps that clobber multi-IP bindings, an iptables-rule map that leaks for multi-port containers, a <code>vm-switch</code> retry loop that reuses a closed file descriptor, and several other concurrency/lifecycle gaps. None of these are introduced by the PR — they exist in upstream <code>rancher-desktop</code> at the import SHA — but they are this repo&#39;s problem the moment the import lands.</p>
+    <p>No critical, fresh-introduced regressions. Verdict is <em>merge with fixes</em>: ship the structural ones with the PR, file the inherited bugs as follow-up issues here (and ideally upstream).</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None. The imported code carries real bugs (see Important Issues below), but they exist in upstream <code>rancher-desktop@c8cd431</code> and ship in production today; they are not introduced by this PR.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> Repo overview is stale after this PR <span class="pill pill-claude">Claude</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <pre><code class="language-text">- `Dockerfile` — multi-stage. Stage 1 (`gobuild`) clones
+  `rancher-sandbox/rancher-desktop` and builds Go binaries plus the local
+  `src/rd-init` and `src/rdd-guest`. Stage 2 (`builder`) runs kiwi.
+…
+- `src/` — Go programs built into the image:
+  - `src/rd-init/` — minimal cloud-init replacement that runs once at
+    Lima boot to apply user-data, network config, etc.
+  - `src/rdd-guest/` — vsock listener that bridges from a Windows host
+    over Hyper-V vsock to `/var/run/docker.sock` inside the WSL VM.</code></pre>
+    <p>The steering text loaded into every <code>/deep-review</code> of this repo still describes a Stage 1 clone and lists <code>src/rdd-guest/</code> under <code>src/</code>. Both contradict the new layout: <code>Dockerfile:3-21</code> no longer clones, <code>src/</code> now holds <code>rd-init/</code> plus <code>go/{guestagent,networking}/</code>, and <code>rdd-guest/</code> lives only on the <code>add-rdd-guest</code> branch. The &quot;Languages and build&quot; section still says &quot;Go 1.23 modules&quot;, but the modules now require Go 1.25.0 (<code>src/rd-init/go.mod</code>) and Go 1.26.0 (<code>src/go/{guestagent,networking}/go.mod</code>).</p>
+    <p>Fix: update the overview to drop the clone, list the new <code>src/go/{guestagent,networking}/</code> modules, and record the per-module Go version. Drop the <code>rdd-guest</code> entry or note that it ships only on the <code>add-rdd-guest</code> branch.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I2">
+        <span class="finding-num">I2.</span> Imported tests have no CI signal <span class="pill pill-claude">Claude</span><a href="#I2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/Dockerfile#L1-L21">Dockerfile</a></div>
+      <pre data-start="1" data-line="6-16"><code class="language-dockerfile"># syntax=docker/dockerfile:1-labs
+
+FROM registry.opensuse.org/opensuse/bci/golang:stable AS gobuild
+COPY src /rd
+
+WORKDIR /rd/go/guestagent
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go build -ldflags &#39;-s -w&#39; -o /go/bin/rancher-desktop-guest-agent .
+
+WORKDIR /rd/go/networking
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go build -ldflags &#39;-s -w&#39; -o /go/bin/network-setup ./cmd/network
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go build -ldflags &#39;-s -w&#39; -o /go/bin/vm-switch ./cmd/vm
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go build -ldflags &#39;-s -w&#39; -o /go/bin/wsl-proxy ./cmd/proxy
+
+WORKDIR /rd/rd-init
+RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
+    go build -ldflags &#39;-s -w&#39; -o /go/bin/rd-init .
+</code></pre>
+    <p>The Dockerfile only runs <code>go build</code> and the workflow only runs <code>make distro.&lt;type&gt;</code>; nothing runs <code>go test</code>. The PR imports ~1250 lines of upstream tests (<code>iptables_test.go</code>, <code>apitracker_test.go</code>, <code>server_test.go</code>) that upstream relied on to validate dependency bumps and refactors. After this merge those tests are inert — when dependabot opens a bump here, the binary still compiles but the contract that gated the same bump upstream is gone.</p>
+    <p>Fix: add <code>go test ./...</code> per module. The cheapest place is the build stage itself:</p>
+      <pre><code class="language-diff"> WORKDIR /rd/go/guestagent
+ RUN --mount=type=cache,target=/root/.cache/go-build --mount=type=cache,target=/go/pkg/mod \
++    go test ./... &amp;&amp; \
+     go build -ldflags &#39;-s -w&#39; -o /go/bin/rancher-desktop-guest-agent .</code></pre>
+    <p>A repo-root <code>.github/workflows/go.yaml</code> per module works too. The dropped <code>src/go/networking/.github/workflows/go.yaml</code> (see S2) was almost exactly that — but in a directory GitHub Actions ignores.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I3">
+        <span class="finding-num">I3.</span> Windows host-side tree is vendored but never built <span class="pill pill-claude">Claude</span><a href="#I3" class="pilcrow">&#182;</a>
+      </div>
+    <p><code>Dockerfile:11-16</code> builds <code>./cmd/network</code>, <code>./cmd/vm</code>, <code>./cmd/proxy</code> only. <code>cmd/host/{config,switch}_windows.go</code> and the two <code>*_windows.go</code> files in <code>pkg/vsock/</code> carry <code>//go:build windows</code> and have no Linux peer. They never compile in this image, but they pull <code>github.com/Microsoft/go-winio</code> and <code>github.com/linuxkit/virtsock</code> into <code>go.mod</code> (and into <code>/go/pkg/mod</code> during <code>go mod download</code>). A future maintainer who runs <code>go build ./...</code> from <code>src/go/networking/</code> will hit a Windows-only package and be confused.</p>
+    <p>Fix: pick one. Either delete <code>cmd/host/</code>, the two <code>pkg/vsock/*_windows.go</code> files, and the now-unreachable winio/hvsock entries in <code>go.mod</code>/<code>go.sum</code>; or keep the tree for upstream-sync parity and add a top-of-file comment in <code>cmd/host/switch_windows.go</code> (and a line in <code>src/go/networking/README.md</code>) explaining that this distro does not consume <code>cmd/host/</code>.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I4">
+        <span class="finding-num">I4.</span> <code>isTimeout</code> returns false for every timeout error <span class="pill pill-codex">Codex</span><a href="#I4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/watcher_linux.go#L203-L225">src/go/guestagent/pkg/kube/watcher_linux.go</a></div>
+      <pre data-start="203" data-line="208-220"><code class="language-go">	}
+
+	return config, nil
+}
+
+func isTimeout(err error) bool {
+	type timeout interface {
+		Timeout() bool
+	}
+
+	var timeoutError timeout
+
+	if !errors.As(err, &amp;timeoutError) {
+		return timeoutError != nil &amp;&amp; timeoutError.Timeout()
+	}
+
+	return false
+}
+
+// This is a k3s error that is received over
+// the HTTP, Also, it is worth noting that this
+// error is wrapped. This is why we are not testing
+// against the real error object using errors.Is().</code></pre>
+    <p>The condition is inverted. When <code>errors.As</code> <em>fails</em>, <code>timeoutError</code> is nil, so the inner expression is always false. When <code>errors.As</code> <em>succeeds</em>, the function falls through to <code>return false</code>. The two callers — <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/watcher_linux.go#L119"><code>watcher_linux.go:119</code></a> (sleep-and-retry on watcher establishment) and <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/servicewatcher_linux.go#L81-L82"><code>servicewatcher_linux.go:81-82</code></a> (treat watcher timeout as benign) — both depend on this returning true for actual timeouts. As written, transient Kubernetes API timeouts surface as fatal errors instead of being retried.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/watcher_linux.go#L114-L124">src/go/guestagent/pkg/kube/watcher_linux.go</a></div>
+      <pre data-start="114" data-line="119"><code class="language-go">			eventCh, errorCh, err = watchServices(watchContext, clientset)
+			if err != nil {
+				switch {
+				default:
+					return err
+				case isTimeout(err):
+				case errors.Is(err, unix.ENETUNREACH):
+				case errors.Is(err, unix.ECONNREFUSED):
+				case isAPINotReady(err):
+				}
+				// sleep and continue for all the expected case</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/servicewatcher_linux.go#L76-L87">src/go/guestagent/pkg/kube/servicewatcher_linux.go</a></div>
+      <pre data-start="76" data-line="81-82"><code class="language-go">			// service unavailable; it should come back later.
+		case errors.Is(err, io.EOF):
+			// watch closed normally; ignore.
+		case errors.Is(err, io.ErrUnexpectedEOF):
+			// connection interrupted; informer will retry, ignore.
+		case isTimeout(err):
+			// connection is a time out of some sort, this is fine
+		case errors.Is(err, unix.ECONNREFUSED):
+			// connection refused; the server is down.
+			// Note that &quot;failed to list&quot; errors need k8s.io/client-go 0.25.0
+			errorCh &lt;- err
+		default:</code></pre>
+    <p>Fix:</p>
+      <pre><code class="language-diff">-	if !errors.As(err, &amp;timeoutError) {
+-		return timeoutError != nil &amp;&amp; timeoutError.Timeout()
++	if errors.As(err, &amp;timeoutError) {
++		return timeoutError.Timeout()
+ 	}
+
+ 	return false</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I5">
+        <span class="finding-num">I5.</span> <code>RemoveAll</code> unexposes ports without protocol <span class="pill pill-codex">Codex</span><a href="#I5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/tracker/apitracker.go#L211-L224">src/go/guestagent/pkg/tracker/apitracker.go</a></div>
+      <pre data-start="211" data-line="216-219"><code class="language-go">					continue
+				}
+
+				log.Debugf(&quot;unexposing the following port binding: %+v&quot;, portBinding)
+
+				err = a.apiForwarder.Unexpose(
+					&amp;types.UnexposeRequest{
+						Local: ipPortBuilder(a.determineHostIP(portBinding.HostIP), portBinding.HostPort),
+					})
+				if err != nil {
+					apiErrs = append(apiErrs,
+						fmt.Errorf(&quot;RemoveAll unexposing %+v failed: %w&quot;, portBinding, err))
+
+					continue</code></pre>
+    <p><code>Remove</code> (lines 167-171) sets both <code>Local</code> and <code>Protocol</code>. <code>RemoveAll</code> omits <code>Protocol</code>. The gvisor forwarder keys proxies by <code>protocol/local</code>, so cleanup paths that route through <code>RemoveAll</code> (shutdown, reconnect) leak UDP mappings. The matching test (<a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/tracker/apitracker_test.go#L604-L607"><code>apitracker_test.go:604-607</code></a>) asserts the same omission, so the bug is locked into the contract.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/tracker/apitracker_test.go#L599-L612">src/go/guestagent/pkg/tracker/apitracker_test.go</a></div>
+      <pre data-start="599" data-line="604-607"><code class="language-go">		fmt.Errorf(&quot;RemoveAll unexposing %+v failed: %w&quot;, errPortBinding, nestedErr),
+	}
+	expectedErr := fmt.Errorf(&quot;%w: %+v&quot;, forwarder.ErrUnexposeAPI, errs)
+	require.EqualError(t, err, expectedErr.Error())
+
+	assert.ElementsMatch(t, expectedUnexposeReq, []*types.UnexposeRequest{
+		{Local: ipPortBuilder(hostIP, hostPort)},
+		{Local: ipPortBuilder(hostIP3, hostPort2)},
+	})
+
+	expectedPortMapping1 := apiTracker.Get(containerID)
+	assert.Nil(t, expectedPortMapping1)
+
+	expectedPortMapping2 := apiTracker.Get(containerID2)</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/tracker/apitracker.go#L162-L176">src/go/guestagent/pkg/tracker/apitracker.go</a></div>
+      <pre data-start="162" data-line="167-171"><code class="language-go">				continue
+			}
+
+			log.Debugf(&quot;unexposing the following port binding: %+v&quot;, portBinding)
+
+			err = a.apiForwarder.Unexpose(
+				&amp;types.UnexposeRequest{
+					Local:    ipPortBuilder(a.determineHostIP(portBinding.HostIP), portBinding.HostPort),
+					Protocol: types.TransportProtocol(strings.ToLower(portProto.Proto())),
+				})
+			if err != nil {
+				errs = append(errs,
+					fmt.Errorf(&quot;unexposing %+v failed: %w&quot;, portBinding, err))
+
+				continue</code></pre>
+    <p>Fix: include the protocol the same way <code>Remove</code> does, and tighten the test.</p>
+      <pre><code class="language-diff"> 			err = a.apiForwarder.Unexpose(
+ 				&amp;types.UnexposeRequest{
+-					Local: ipPortBuilder(a.determineHostIP(portBinding.HostIP), portBinding.HostPort),
++					Local:    ipPortBuilder(a.determineHostIP(portBinding.HostIP), portBinding.HostPort),
++					Protocol: types.TransportProtocol(strings.ToLower(portProto.Proto())),
+ 				})</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I6">
+        <span class="finding-num">I6.</span> <code>go test</code> fails on Linux from a <code>vet</code> error <span class="pill pill-codex">Codex</span><a href="#I6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/servicewatcher_linux.go#L85-L99">src/go/guestagent/pkg/kube/servicewatcher_linux.go</a></div>
+      <pre data-start="85" data-line="90-94"><code class="language-go">			// Note that &quot;failed to list&quot; errors need k8s.io/client-go 0.25.0
+			errorCh &lt;- err
+		default:
+			var statusError *apierrors.StatusError
+			if errors.As(err, &amp;statusError) {
+				log.Debugw(&quot;kubernetes: got status error&quot;, log.Fields{
+					&quot;status&quot;: statusError.Status(),
+					//nolint:govet // .DebugError() returns a format string plus fields.
+					&quot;debug&quot;: fmt.Sprintf(statusError.DebugError()),
+				})
+			}
+			log.Errorw(&quot;kubernetes: unexpected error watching&quot;, log.Fields{
+				&quot;error&quot;: err,
+			})
+		}</code></pre>
+    <p><code>GOOS=linux go test ./...</code> fails with <code>non-constant format string in call to fmt.Sprintf</code> at line 93. The <code>nolint:govet</code> directive suppresses the linter but not <code>go test</code>&#39;s vet pass. The code is also behaviorally wrong: <code>DebugError()</code> returns <code>(string, []any)</code>, so the call passes a format string with no arguments to <code>fmt.Sprintf</code>. This pairs with I2 — once tests run in CI, this stops the suite immediately.</p>
+    <p>Fix:</p>
+      <pre><code class="language-diff"> 			var statusError *apierrors.StatusError
+ 			if errors.As(err, &amp;statusError) {
++				debugFormat, debugArgs := statusError.DebugError()
+ 				log.Debugw(&quot;kubernetes: got status error&quot;, log.Fields{
+ 					&quot;status&quot;: statusError.Status(),
+-					//nolint:govet // .DebugError() returns a format string plus fields.
+-					&quot;debug&quot;: fmt.Sprintf(statusError.DebugError()),
++					&quot;debug&quot;:  fmt.Sprintf(debugFormat, debugArgs...),
+ 				})
+ 			}</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I7">
+        <span class="finding-num">I7.</span> Listener and UDP-conn maps key on port only, clobbering same-port-different-IP bindings <span class="pill pill-codex">Codex</span> <span class="pill pill-gemini">Gemini</span><a href="#I7" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/pkg/portproxy/server.go#L40-L54">src/go/networking/pkg/portproxy/server.go</a></div>
+      <pre data-start="40" data-line="45-49"><code class="language-go">	ctx            context.Context
+	config         *ProxyConfig
+	listener       net.Listener
+	quit           chan struct{}
+	listenerConfig net.ListenConfig
+	// map of TCP port number as a key to associated listener
+	activeListeners map[int]net.Listener
+	listenerMutex   sync.Mutex
+	// map of UDP port number as a key to associated UDPConn
+	activeUDPConns map[int]*net.UDPConn
+	udpConnMutex   sync.Mutex
+	wg             sync.WaitGroup
+}
+
+func NewPortProxy(ctx context.Context, listener net.Listener, cfg *ProxyConfig) *PortProxy {</code></pre>
+    <p>Both maps key on <code>int</code> port. When Docker reports two bindings for the same port on different host IPs (e.g., <code>127.0.0.1:8080</code> and <code>192.168.x.y:8080</code>), the second add overwrites the first map entry. The remove path closes only the surviving handle; the earlier listener stays alive and the port stays bound until the process exits.</p>
+    <p>Fix: key both maps by <code>{HostIP, HostPort}</code> and use that key on add/remove/cleanup.</p>
+      <pre><code class="language-diff">-activeListeners map[int]net.Listener
++activeListeners map[bindingKey]net.Listener</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I8">
+        <span class="finding-num">I8.</span> <code>iptablesRulesToDelete</code> map keyed by container ID alone <span class="pill pill-gemini">Gemini</span><a href="#I8" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/docker/events.go#L254-L268">src/go/guestagent/pkg/docker/events.go</a></div>
+      <pre data-start="254" data-line="259-263"><code class="language-go">			iptableCmd.Stderr = &amp;stderr
+			if err := iptableCmd.Run(); err != nil {
+				errs = append(errs, fmt.Errorf(&quot;creating loopback rule in DOCKER chain failed: %w [%s]&quot;, err, stderr.String()))
+				log.Debugf(&quot;running the following iptables rule [%s] with the error(s):[%v]&quot;, iptableCmd.String(), errs)
+			}
+			e.iptablesRulesToDelete[containerID] = iptablesDeleteLoopbackRuleCmd(
+				ctx,
+				portProto.Proto(),
+				portBinding.HostPort,
+				fmt.Sprintf(&quot;%s:%s&quot;, containerIP, portProto.Port()))
+		}
+	}
+
+	if len(errs) != 0 {
+		return fmt.Errorf(&quot;%w: %+v&quot;, utils.ErrExecIptablesRule, errs)</code></pre>
+    <p>The map key is the container ID. The two enclosing loops walk every port and every Docker network, so a multi-port or multi-network container overwrites the entry; only the last delete command survives. When the container stops, every other rule it added stays behind in the <code>DOCKER</code> chain.</p>
+    <p>Fix: store a slice per container.</p>
+      <pre><code class="language-diff">-iptablesRulesToDelete map[string]*exec.Cmd
++iptablesRulesToDelete map[string][]*exec.Cmd</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I9">
+        <span class="finding-num">I9.</span> <code>Iptables.ForwardPorts</code> advances state before <code>Add</code> succeeds <span class="pill pill-gemini">Gemini</span><a href="#I9" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/iptables/iptables.go#L83-L95">src/go/guestagent/pkg/iptables/iptables.go</a></div>
+      <pre data-start="83" data-line="88-90"><code class="language-go">				continue // Retry in the next iteration
+			}
+			return err
+		}
+
+		// Diff from existing forwarded ports
+		added, removed := comparePorts(ports, newPorts)
+		ports = newPorts
+
+		// Remove old forwards
+		for _, p := range removed {
+			name := entryToString(p)
+			if err := i.apiTracker.Remove(utils.GenerateID(name)); err != nil {</code></pre>
+    <p><code>ports</code> advances to <code>newPorts</code> before the per-port <code>apiTracker.Add</code> calls run. A failure on <code>Add</code> only logs and continues. On the next tick <code>comparePorts</code> sees the failed port as already known, so <code>added</code> is empty and the forward never retries. The mapping stays unforwarded until the iptables scan loses the entry (which itself triggers a <code>Remove</code> for a port that was never added).</p>
+    <p>Fix: only advance state for ports whose <code>Add</code> succeeded — stage successes, then merge into <code>ports</code> after the inner loop. Or hold <code>ports</code> at the previous value and let the next tick re-add.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I10">
+        <span class="finding-num">I10.</span> vm-switch retries with a closed file descriptor <span class="pill pill-gemini">Gemini</span><a href="#I10" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/cmd/vm/switch_linux.go#L79-L89">src/go/networking/cmd/vm/switch_linux.go</a></div>
+      <pre data-start="79" data-line="84"><code class="language-go">	// of the parent process. This is for the AF_VSOCK connection that
+	// is handed over from the default namespace to Rancher Desktop&#39;s
+	// network namespace, the logic behind this approach is because
+	// AF_VSOCK is affected by network namespaces, therefore we need
+	// to open it before entering a new namespace (via unshare/nsenter)
+	connFile := os.NewFile(uintptr(vsockFD), &quot;vsock connection&quot;)
+
+	logrus.Debugf(&quot;using a AF_VSOCK connection file from default namespace: %v&quot;, connFile)
+
+	// this should never happen
+	if err := checkForExistingIface(tapIface); err != nil {</code></pre>
+    <p><code>connFile</code> comes from the parent process via vsock-fd argument and <code>os.NewFile</code>. <code>run</code> defers <code>connFile.Close()</code> (line 128). On the second iteration the loop calls <code>run</code> again with the now-closed <code>*os.File</code>; every read/write fails immediately, the loop sleeps a second, and the process spins forever, never re-establishing the connection. There is no path in <code>vm-switch</code> to recreate the parent-supplied vsock — only the parent (<code>network-setup</code>) can do that.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/cmd/vm/switch_linux.go#L123-L133">src/go/networking/cmd/vm/switch_linux.go</a></div>
+      <pre data-start="123" data-line="128"><code class="language-go">		logrus.Fatalf(&quot;creating tap device %v failed: %s&quot;, tapIface, err)
+	}
+	logrus.Debugf(&quot;created tap device %s: %v&quot;, tapIface, tap)
+
+	defer func() {
+		connFile.Close()
+		tap.Close()
+		logrus.Debugf(&quot;closed tap device: %s&quot;, tapIface)
+	}()
+
+	if err := linkUp(tapIface, tapDeviceMacAddr); err != nil {</code></pre>
+    <p>Fix: drop the retry loop. Exit the process after the first failure so systemd can restart <code>network-setup.service</code> and re-pass a fresh fd.</p>
+      <pre><code class="language-diff">-		default:
+-			if err := run(ctx, cancel, connFile); err != nil {
+-				logrus.Error(err)
+-			}
+-			// Wait one second before attempting to re-establish connection.
+-			time.Sleep(time.Second)
++		default:
++			err := run(ctx, cancel, connFile)
++			logrus.Errorf(&quot;run exited: %v; terminating so the parent restarts us&quot;, err)
++			os.Exit(1)
+		}</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I11">
+        <span class="finding-num">I11.</span> WSL UDP proxy never reads VM responses <span class="pill pill-gemini">Gemini</span><a href="#I11" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/pkg/portproxy/server.go#L164-L206">src/go/networking/pkg/portproxy/server.go</a></div>
+      <pre data-start="164" data-line="169-201"><code class="language-go">
+		go p.acceptUDPConn(c, targetAddr)
+	}
+}
+
+func (p *PortProxy) acceptUDPConn(sourceConn *net.UDPConn, targetAddr *net.UDPAddr) {
+	targetConn, err := net.DialUDP(&quot;udp&quot;, nil, targetAddr)
+	if err != nil {
+		logrus.Errorf(&quot;failed to connect to target address: %s : %s&quot;, targetAddr, err)
+		return
+	}
+	defer targetConn.Close()
+	p.wg.Add(1)
+	for {
+		b := make([]byte, p.config.UDPBufferSize)
+		n, addr, err := sourceConn.ReadFromUDP(b)
+		if err != nil &amp;&amp; n == 0 {
+			logrus.Errorf(&quot;error reading UDP packet from source: %s : %s&quot;, addr, err)
+			if errors.Is(err, net.ErrClosed) {
+				p.wg.Done()
+				break
+			}
+			continue
+		}
+		logrus.Debugf(&quot;received %d data from %s&quot;, n, addr)
+
+		n, err = targetConn.Write(b[:n])
+		if err != nil {
+			logrus.Errorf(&quot;error forwarding UDP packet to target: %s : %s&quot;, targetAddr, err)
+			if errors.Is(err, net.ErrClosed) {
+				p.wg.Done()
+				break
+			}
+			continue
+		}
+		logrus.Debugf(&quot;sent %d data to %s&quot;, n, targetAddr)
+	}
+}
+
+func (p *PortProxy) handleTCP(portBindings []nat.PortBinding, remove bool) {
+	for _, portBinding := range portBindings {
+		port, err := nat.ParsePort(portBinding.HostPort)
+		if err != nil {</code></pre>
+    <p>The loop reads from the host-side <code>sourceConn</code> and writes to the upstream <code>targetConn</code>, but never reads from <code>targetConn</code> to write back to the client. Any UDP response the upstream sends — DNS replies, NTP, mDNS — disappears. The WSL trust model in <code>deep-review-context.md</code> does not lower the bar here; this is a forwarding contract issue, not a host-share concern.</p>
+    <p>Fix: launch a paired goroutine that reads from <code>targetConn</code> and writes back via <code>sourceConn.WriteToUDP(buf, addr)</code>. Multi-client UDP needs a per-client target connection map; for a single-client port-forward, the simpler pair is enough.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I12">
+        <span class="finding-num">I12.</span> <code>servicewatcher_linux</code> calls <code>WaitForCacheSync</code> before <code>Start</code> <span class="pill pill-gemini">Gemini</span><a href="#I12" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/servicewatcher_linux.go#L100-L111">src/go/guestagent/pkg/kube/servicewatcher_linux.go</a></div>
+      <pre data-start="100" data-line="105-106"><code class="language-go">	})
+	if err != nil {
+		return nil, nil, fmt.Errorf(&quot;error watching services: %w&quot;, err)
+	}
+
+	informerFactory.WaitForCacheSync(ctx.Done())
+	informerFactory.Start(ctx.Done())
+
+	services, err := client.CoreV1().Services(corev1.NamespaceAll).List(ctx, v1.ListOptions{})
+	if err != nil {
+		return nil, nil, fmt.Errorf(&quot;error listing services: %w&quot;, err)
+	}</code></pre>
+    <p><code>WaitForCacheSync</code> polls <code>HasSynced()</code> on every started informer; with no informer started yet, it returns immediately. The code then runs a manual <code>client.CoreV1().Services(...).List(...)</code> and dispatches <code>handleUpdate</code> for each item. Right after, <code>Start</code> runs and the informer&#39;s own <code>AddFunc</code> fires for the same items. Every initial service is reported twice.</p>
+    <p>Fix: reverse the calls. Drop the manual <code>List</code> — the informer&#39;s <code>AddFunc</code> already covers initial items.</p>
+      <pre><code class="language-diff">-informerFactory.WaitForCacheSync(ctx.Done())
+-informerFactory.Start(ctx.Done())
++informerFactory.Start(ctx.Done())
++informerFactory.WaitForCacheSync(ctx.Done())</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I13">
+        <span class="finding-num">I13.</span> TCP proxy half-close drops in-flight upstream data <span class="pill pill-gemini">Gemini</span><a href="#I13" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/pkg/utils/pipe.go#L30-L50">src/go/networking/pkg/utils/pipe.go</a></div>
+      <pre data-start="30" data-line="35-49"><code class="language-go">	upstream, err := dialer.DialContext(ctx, &quot;tcp&quot;, upstreamAddr)
+	if err != nil {
+		logrus.Errorf(&quot;Failed to dial upstream %s: %s&quot;, upstreamAddr, err)
+		return
+	}
+	go func() {
+		if _, err := io.Copy(upstream, conn); err != nil {
+			logrus.Debugf(&quot;Error copying to upstream: %s&quot;, err)
+		}
+		if err = upstream.Close(); err != nil {
+			logrus.Debugf(&quot;error closing connection while writing to upstream: %s&quot;, err)
+		}
+	}()
+
+	if _, err := io.Copy(conn, upstream); err != nil {
+		logrus.Debugf(&quot;Error copying from upstream: %s&quot;, err)
+	}
+	if err = upstream.Close(); err != nil {
+		logrus.Debugf(&quot;error closing connection: %s&quot;, err)
+	}
+}</code></pre>
+    <p>When the client EOFs, the goroutine&#39;s <code>upstream.Close()</code> tears down the whole TCP connection, including the upstream→client direction. Any data the upstream still has in flight goes out as RST. Long-lived request-response protocols (HTTP keep-alive, SSH, TLS half-closes during shutdown) drop their tail.</p>
+    <p>Fix: half-close instead of full-close on the client→upstream direction.</p>
+      <pre><code class="language-go">if cw, ok := upstream.(interface{ CloseWrite() error }); ok {
+	cw.CloseWrite()
+} else {
+	upstream.Close()
+}</code></pre>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I14">
+        <span class="finding-num">I14.</span> Static K8s API mapping sent once with no retry <span class="pill pill-gemini">Gemini</span><a href="#I14" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/main.go#L135-L165">src/go/guestagent/main.go</a></div>
+      <pre data-start="135" data-line="140-160"><code class="language-go">	// Manually register the port for K8s API, we would
+	// only want to send this manual port mapping if both
+	// of the following conditions are met:
+	// 1) if kubernetes is enabled
+	// 2) when wsl-proxy for wsl-integration is enabled
+	if enableKubernetes {
+		port, err := nat.NewPort(&quot;tcp&quot;, k8sAPIPort)
+		if err != nil {
+			return fmt.Errorf(&quot;failed to parse port for k8s API: %w&quot;, err)
+		}
+		k8sAPIPortMapping := types.PortMapping{
+			Remove: false,
+			Ports: nat.PortMap{
+				port: []nat.PortBinding{
+					{
+						HostIP:   &quot;127.0.0.1&quot;,
+						HostPort: k8sAPIPort,
+					},
+				},
+			},
+		}
+		if err := wslProxyForwarder.Send(k8sAPIPortMapping); err != nil {
+			return fmt.Errorf(&quot;failed to send a static portMapping event to wsl-proxy: %w&quot;, err)
+		}
+		log.Debugf(&quot;successfully forwarded k8s API port [%s] to wsl-proxy&quot;, k8sAPIPort)
+	}
+
+	if enableContainerd {
+		group.Go(func() error {
+			for {
+				eventMonitor, err := containerd.NewEventMonitor(containerdSock, portTracker)</code></pre>
+    <p>The static port mapping for the K8s API is sent exactly once at guestagent startup. If <code>wsl-proxy</code> is not yet listening on <code>/run/wsl-proxy.sock</code>, guestagent dies with the error. If <code>wsl-proxy</code> is up at startup but later restarts, guestagent has no reconciliation path — <code>wsl-proxy</code> comes back without the K8s mapping and the API stays unreachable from the host.</p>
+    <p>Fix: retry the initial send with a bounded backoff (e.g., 30s × 1s) instead of failing on first refusal, and re-send any static mappings whenever the WSL-proxy socket reconnects. A periodic sync from <code>APITracker.portStorage</code> to <code>wsl-proxy</code> would make all static-and-dynamic mappings survive proxy restarts.</p>
+    </div>
+    <div class="card card-important">
+      <div class="finding-title" id="I15">
+        <span class="finding-num">I15.</span> <code>Close()</code> blocks indefinitely on active forwards <span class="pill pill-gemini">Gemini</span><a href="#I15" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/pkg/portproxy/server.go#L254-L284">src/go/networking/pkg/portproxy/server.go</a></div>
+      <pre data-start="254" data-line="259-279"><code class="language-go">			utils.Pipe(p.ctx, conn, forwardAddr)
+		}(conn)
+	}
+}
+
+func (p *PortProxy) Close() error {
+	// Close all the active listeners
+	p.cleanupListeners()
+
+	// Close all active UDP connections
+	p.cleanupUDPConns()
+
+	// Close the listener first to prevent new connections.
+	err := p.listener.Close()
+	if err != nil {
+		return err
+	}
+
+	// Signal the quit channel to stop accepting new connections.
+	close(p.quit)
+
+	// Wait for all pending connections to finish.
+	p.wg.Wait()
+
+	return nil
+}
+
+func (p *PortProxy) cleanupListeners() {
+	p.listenerMutex.Lock()
+	defer p.listenerMutex.Unlock()
+	for _, l := range p.activeListeners {</code></pre>
+    <p><code>cleanupListeners</code> and <code>cleanupUDPConns</code> close the listening sockets but not the data connections that <code>acceptTraffic</code> and <code>acceptUDPConn</code> already accepted (each one increments <code>wg</code>). <code>utils.Pipe</code> blocks on <code>io.Copy</code> until both sides EOF, and <code>acceptUDPConn</code> blocks on <code>ReadFromUDP</code> until <code>sourceConn</code> closes — so as long as a single keepalive or streaming session is open, <code>wg.Wait()</code> never returns. The wsl-proxy shutdown path hangs until systemd&#39;s <code>TimeoutStopSec</code> force-kills it.</p>
+    <p>Fix: track the active <code>net.Conn</code>s in a slice or map, and close them in <code>Close()</code> before waiting on <code>wg</code>. The clean shutdown is &quot;stop accepting → close in-flight → wait for goroutines.&quot;</p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> Vendored READMEs link to upstream-only documentation <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/README.md#L1">src/go/guestagent/README.md</a></div>
+      <pre data-start="1" data-line="1"><code class="language-markdown">[Rancher Desktop Guest Agent](/docs/networking/windows/rancher-desktop-guest-agent.md)</code></pre>
+    <p>The leading slash makes the link resolve to <code>https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/main/docs/...</code>, which does not exist (no <code>docs/</code> directory in this repo). The networking README still describes <code>host-switch.exe</code> as a component, but this image does not build it (see I3).</p>
+    <p>Fix: rewrite the guestagent link as the absolute upstream URL (<code>https://github.com/rancher-sandbox/rancher-desktop/blob/main/docs/networking/windows/rancher-desktop-guest-agent.md</code>) and add a one-line note in the networking README saying <code>host-switch</code> ships from the Rancher Desktop installer, not from this image.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> Vendored <code>.github/</code>, <code>Makefile</code>, <code>.gitignore</code> are dead in this location <span class="pill pill-claude">Claude</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+    <p>GitHub Actions only resolves workflow files at the repository root&#39;s <code>.github/workflows/</code>, so the two vendored workflows never run. The <code>Makefile</code> is a relic of the standalone networking repo (<code>make build</code> invokes <code>host-switch vm-switch network-setup wsl-proxy</code>, which the top-level <code>Dockerfile</code> already does). A contributor opening <code>src/go/networking/</code> will reasonably assume <code>make build</code> is the supported build path.</p>
+    <p>Fix: delete <code>src/go/networking/.github/</code>, the <code>Makefile</code>, and the <code>/bin/</code> entry in <code>.gitignore</code> (the latter only existed for the <code>Makefile</code>&#39;s <code>bin/</code> output). Or, if the policy is upstream parity, add a one-liner in <code>src/go/networking/README.md</code> stating none of these run from this location.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Go version asymmetry between modules is undocumented <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+    <p>The <code>go</code> directive in <code>src/go/networking/go.mod</code> was bumped from <code>1.25.0</code> to <code>1.26.0</code> in the same commit that added the <code>replace</code> directive, since <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/go.mod#L3"><code>src/go/guestagent/go.mod:3</code></a> requires <code>1.26.0</code> and a <code>replace</code> pulling guestagent in raises the floor. <code>src/rd-init/go.mod</code> stays on <code>1.25.0</code>. The commit message (&quot;Build guestagent and networking from local sources&quot;) does not mention the bump.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/go.mod#L1-L8">src/go/guestagent/go.mod</a></div>
+      <pre data-start="1" data-line="3"><code class="language-plaintext">module github.com/rancher-sandbox/rancher-desktop/src/go/guestagent
+
+go 1.26.0
+
+require (
+	github.com/Masterminds/log-go v1.0.0
+	github.com/containerd/containerd v1.7.31
+	github.com/containerd/containerd/api v1.10.0</code></pre>
+    <p>Fix: either bump <code>src/rd-init/go.mod</code> to <code>1.26.0</code> for module-wide consistency or note the asymmetry in the commit body or near the <code>replace</code> directive.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> LICENSE asymmetry between vendored modules <span class="pill pill-claude">Claude</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+    <p><code>src/go/networking/LICENSE</code> is a full Apache 2.0 copy carried over from the standalone networking repo. <code>src/go/guestagent/</code> has no LICENSE file; the repo root has none either. Per-file headers carry the Apache 2.0 notice, so the legal status is clear, but a downstream license scan will flag the asymmetry.</p>
+    <p>Fix: add a top-level <code>LICENSE</code> (Apache 2.0) and remove <code>src/go/networking/LICENSE</code>. That matches what every per-file header already implies and avoids the lopsided vendored copy.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> <code>replace</code> directive hard-codes a relative path <span class="pill pill-claude">Claude</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/go.mod#L46-L51">src/go/networking/go.mod</a></div>
+      <pre data-start="46" data-line="51"><code class="language-text">	golang.org/x/tools v0.43.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+replace github.com/rancher-sandbox/rancher-desktop/src/go/guestagent =&gt; ../guestagent</code></pre>
+    <p>The relative <code>../guestagent</code> ties networking&#39;s build to the current layout. If <code>src/go/networking/</code> ever moves (the PR thread mentions a future migration to <code>rancher-desktop-daemon</code>), Go falls back to the pseudo-version in the <code>require</code> line and the build fails on a stale <code>go.sum</code>.</p>
+    <p>Fix: a repo-root <code>go.work</code> covering both modules makes the link declarative and breaks loudly if either module moves. Lower priority while the layout is settled.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S6">
+        <span class="finding-num">S6.</span> <code>searchDomains</code> parsing splits on a single space <span class="pill pill-gemini">Gemini</span><a href="#S6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/networking/pkg/config/config.go#L79-L89">src/go/networking/pkg/config/config.go</a></div>
+      <pre data-start="79" data-line="84"><code class="language-go">		defer f.Close()
+		sc := bufio.NewScanner(f)
+		searchPrefix := &quot;search &quot;
+		for sc.Scan() {
+			if strings.HasPrefix(sc.Text(), searchPrefix) {
+				searchDomains := strings.Split(strings.TrimPrefix(sc.Text(), searchPrefix), &quot; &quot;)
+				logrus.Debugf(&quot;Using search domains: %v&quot;, searchDomains)
+				return searchDomains
+			}
+		}
+		if err := sc.Err(); err != nil {</code></pre>
+    <p><code>strings.Split</code> on <code>&quot; &quot;</code> produces empty entries for runs of whitespace or trailing spaces (<code>&quot;a  b &quot;</code> → <code>[&quot;a&quot;, &quot;&quot;, &quot;b&quot;, &quot;&quot;]</code>). <code>/etc/resolv.conf</code> lines vary in spacing in the wild.</p>
+    <p>Fix: use <code>strings.Fields(strings.TrimPrefix(...))</code> to tokenize on any contiguous whitespace.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S7">
+        <span class="finding-num">S7.</span> 494-commit import floods <code>git log</code> and <code>git shortlog</code> <span class="pill pill-claude">Claude</span><a href="#S7" class="pilcrow">&#182;</a>
+      </div>
+    <p>The filter-repo brought ~280 dependabot/merge commits whose PR numbers reference upstream and do not bisect cleanly here. <code>git shortlog -sn</code> is now dominated by upstream contributors who never touched this distro. The PR description records the source SHA <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/c8cd431032a0223a3072cb9faa70a4704262f474"><code>c8cd431032a0223a3072cb9faa70a4704262f474</code></a>, so the same provenance survives a single squashed import commit.</p>
+    <p>Fix: consider <code>--squash</code>-ing the import. <code>git log --follow</code> continues to cross the rename boundary back to <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/c8cd431"><code>c8cd431</code></a> once the upstream remote is added, so per-file history survives. Document the choice either way in the merge commit body.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <p><strong>Vendoring vs. upstream module dependency (in-scope)</strong> <span class="pill pill-claude">Claude</span>. The PR description notes the source SHA and the <code>replace</code> directive, but does not articulate the operational benefit of vendoring over a pinned <code>go get</code> against tagged upstream releases. The alternative — keep <code>go.mod</code> pointing at a tagged <code>rancher-desktop</code> release, vendor a tarball into the build cache for offline use — would let dependabot keep this repo&#39;s modules current, run upstream&#39;s tests, and drop S1–S5 from this review. Jandubois&#39;s PR comment (&quot;Even that seems excessive if we move the sources eventually to <code>rancher-desktop-daemon</code>&quot;) flags the same tension. Worth one paragraph in the merge commit or PR description on why we vendor here-and-now rather than waiting for the daemon repo.</p>
+    <p><strong>Inherited bugs come with ownership (in-scope)</strong> <span class="pill pill-claude">Claude</span>. Ten of the fifteen Important findings (I4–I15) are pre-existing upstream bugs surfaced by the import. Before this PR they belonged to <code>rancher-desktop</code>; after, they belong here too. The team needs an explicit triage policy: file each as a follow-up issue against this repo, sync with upstream so fixes go in once, and set a cadence for re-importing the upstream sources or backporting fixes here.</p>
+    <p><em></em>No reconciliation between <code>guestagent</code> and <code>wsl-proxy</code> (future)<em></em> <span class="pill pill-gemini">Gemini</span>. The <code>APITracker</code> fires events at <code>wsl-proxy</code> and forgets them. A <code>wsl-proxy</code> restart wipes its mapping table and there is no resync — the closest thing to a recovery path is a container restart that re-emits the event. A pull-based contract (<code>wsl-proxy</code> queries <code>guestagent</code> on startup) or a periodic full-state push would survive proxy restarts. I14 is the visible symptom; the structural fix is broader.</p>
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Network-free Stage 1 build</strong> <span class="pill pill-claude">Claude</span> <span class="pill pill-codex">Codex</span>. Replacing <code>git clone https://github.com/rancher-sandbox/rancher-desktop</code> with <code>COPY src /rd</code> removes the only network egress from <code>gobuild</code>. The image is now reproducible offline; CI runners no longer race <code>github.com</code> rate limits or DNS.</li>
+      <li><strong>Per-module build isolation</strong> <span class="pill pill-claude">Claude</span>. Each <code>WORKDIR + go build</code> block is short, isolated, and uses BuildKit cache mounts. Build flags (<code>-ldflags &#39;-s -w&#39;</code>) match the deleted block; no binary-size regression.</li>
+      <li><em></em><code>replace</code> keeps the modules buildable in place<em></em> <span class="pill pill-codex">Codex</span>. The <code>replace github.com/rancher-sandbox/rancher-desktop/src/go/guestagent =&gt; ../guestagent</code> line lets <code>networking</code> resolve <code>guestagent</code> from the local copy without a second checkout. This is the right minimum pattern for two co-vendored modules.</li>
+      <li><strong>Earlier review feedback addressed</strong> <span class="pill pill-claude">Claude</span>. The <code>src/go/guestagent/guestagent</code> binary that prior inline comments flagged is no longer in the tree.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>The repo has no automated test invocation today (overview: &quot;No test suite in the repo. Verification is by booting the produced images.&quot;) and this PR keeps that posture, even though it imports ~1250 lines of upstream tests. Specific gaps surfaced by the review:</p>
+    <ol>
+      <li>(highest risk) <code>apitracker.go</code> <code>Add</code>/<code>Remove</code>/<code>RemoveAll</code> semantics — <code>apitracker_test.go</code> covers these upstream and ships in this PR, but never runs. I5 would be caught by an end-to-end UDP unexpose test, but no such test exists.</li>
+      <li><code>iptables.go</code> <code>comparePorts</code> and <code>ForwardPorts</code> partial-failure handling — <code>iptables_test.go</code> exists but does not exercise the failure-after-state-update path that breaks I9.</li>
+      <li><code>portproxy/server.go</code> add+remove flow — <code>server_test.go</code> covers single-binding-per-port. It does not exercise multi-host-IP bindings (I7), <code>Close()</code> while connections are active (I15), or two-way UDP (I11).</li>
+      <li><strong>Linux build sanity broken by I6.</strong> <code>GOOS=linux go test ./...</code> in <code>src/go/guestagent</code> fails under <code>vet</code> at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/kube/servicewatcher_linux.go#L93"><code>servicewatcher_linux.go:93</code></a>. Codex verified that <code>go test ./...</code> on darwin (which excludes the Linux-only files) still passes; <code>GOOS=linux go build ./...</code> and <code>GOOS=windows go build ./...</code> both pass for <code>networking</code>. The failure mode is in <code>go test</code>&#39;s vet pass, not the compiler.</li>
+      <li>No smoke test confirms the produced binaries exec at boot. <code>make distro.raw.xz</code> exercises the build paths; no test asserts that <code>rancher-desktop-guest-agent</code> and <code>vm-switch</code> come up under systemd in a booted image.</li>
+    </ol>
+    <p>I2 plus a fix for I6 would unblock #1–#4. #5 is a pre-existing gap.</p>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li>I1: the steering overview describing this repo is stale after this PR (clone, <code>rdd-guest</code>, Go versions).</li>
+      <li>S1: vendored READMEs link to upstream-only paths.</li>
+      <li>S4: LICENSE asymmetry between <code>src/go/guestagent</code> and <code>src/go/networking</code>.</li>
+      <li>The new Dockerfile is self-explanatory; no inline comments needed there.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><code>5449268d9 Merge src/go/guestagent and src/go/networking from rancher-desktop</code> — the merge commit body records the source SHA <code>c8cd431…</code> and the filter-repo provenance, the minimum needed for traceability. Fine.</li>
+      <li><code>d0c0b8e44 Build guestagent and networking from local sources</code> bundles three independent things: the Dockerfile rewrite, the <code>go 1.25→1.26</code> bump on networking, and the <code>replace</code> directive. The message names only the first. Either expand the message to mention the Go bump and the <code>replace</code> line, or split into two commits (&quot;Add replace directive for local guestagent&quot; + &quot;Build from local sources&quot;).</li>
+      <li>The 494 imported commits (per S7) carry authentic upstream messages but lose their original PR context once cherry-picked here.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><strong>PR comment by @jandubois (general)</strong> — &quot;16,171 commits&quot; originally flagged as too many. Re-imported via <code>git filter-repo --path src/go/guestagent --path src/go/networking</code> to ~494 commits in the branch, consistent with reviewer experiments.</li>
+      <li><strong>Inline comments by @mook-as / @Nino-K</strong> at <code>src/go/guestagent/guestagent:1</code> (<code>discussion_r3151042707</code>, <code>discussion_r3155807028</code>) — the binary was inadvertently checked in. The current branch has no such file (verified with <code>find src/go/guestagent -type f -name guestagent</code>). Resolved.</li>
+      <li><em></em><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/d0c0b8e445f4f2611480cfe45f042dbfde8f9096/src/go/guestagent/pkg/containerd/events_linux.go#L388-L390"><code>events_linux.go:388-390</code></a> comment<em></em> (Codex acknowledged) — containerd&#39;s CNI chain teardown is treated as the cleanup path for containerd-created iptables rules; the import does not change this assumption, but it is now an owned operational dependency in this repo.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><strong>@jandubois</strong> (&quot;Even that seems excessive if we move the sources eventually to <code>rancher-desktop-daemon</code>, but I guess it is fine&quot;). The forward-looking <code>rancher-desktop-daemon</code> migration plan is not addressed in subsequent commits or in the PR description. Worth at least a sentence in the PR description on whether vendoring here is interim-with-known-end or the long-term plan. Captured as a Design Observation above.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude-opus-4-7"><span class="pill pill-claude">Claude</span> <a href="#claude-opus-4-7" class="pilcrow">&#182;</a></h3>
+    <p>Read the PR through the lens of &quot;what does this PR specifically introduce?&quot; and produced the three findings nobody else surfaced: the stale repo overview (I1), the inert imported tests (I2), and the dead Windows-host tree pulling phantom dependencies (I3). Also surfaced the LICENSE asymmetry, the relative-path <code>replace</code> fragility, and the squash-vs-keep-history trade-off — none of which the other agents touched. Did not chase upstream-code bugs; the review is intentionally narrow on PR scope.</p>
+    <h3 id="codex-gpt-5-5"><span class="pill pill-codex">Codex</span> <a href="#codex-gpt-5-5" class="pilcrow">&#182;</a></h3>
+    <p>Found the four cleanest bugs in the imported tree: the inverted <code>isTimeout</code> (I4), the missing protocol in <code>RemoveAll</code> (I5), the <code>vet</code>-failing <code>Sprintf</code> (I6), and the port-only listener key (I7, also flagged by Gemini). Verified its claims by actually running <code>GOOS=linux go test ./...</code> and <code>GOOS=windows go build ./...</code> and reporting which combinations pass. Lowest false-positive rate of the three; most directly actionable findings.</p>
+    <h3 id="gemini-3-1-pro"><span class="pill pill-gemini">Gemini</span> <a href="#gemini-3-1-pro" class="pilcrow">&#182;</a></h3>
+    <p>Cast the widest net and found the most upstream-code bugs (eight Important, one Suggestion), several of which the other agents missed entirely: the iptables multi-port map leak (I8), the <code>ForwardPorts</code> state-before-success bug (I9), the <code>vm-switch</code> closed-fd retry loop (I10), the one-way UDP forward (I11), the inverted <code>WaitForCacheSync</code>/<code>Start</code> ordering (I12), the TCP half-close drop (I13), the static K8s API mapping retry gap (I14), and the <code>Close()</code> hang (I15). Inflated severity throughout — three of these went out the door labeled &quot;critical, regression&quot; when none actually regress against the merge-base (the imported code did not exist there) and none crossed the bar for critical given the WSL-trust-model context. Severity recalibration produced one &quot;Critical → Important&quot; demotion for each of C1, C2, C3 (zero criticals survive consolidation); regression labels demoted to &quot;inherited from upstream&quot; across the board. Skipped <code>git blame</code> per its known quota constraints — Codex and Claude covered the regression-vs-pre-existing question.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>7m 25s</td><td>7m 43s</td><td>6m 25s</td></tr>
+        <tr><td>Findings</td><td>3I 5S</td><td>4I 1S</td><td>9I 1S</td></tr>
+        <tr><td>Tool calls</td><td>50 (Bash 25, Read 25)</td><td>92 (shell 85, stdin 7)</td><td>24 (read<em>file 15, run</em>shell_command 9)</td></tr>
+        <tr><td>Design observations</td><td>4</td><td>1</td><td>1</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>5</td><td>3</td><td>7</td></tr>
+        <tr><td>Files reviewed</td><td>47</td><td>47</td><td>47</td></tr>
+        <tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>3I 5S</strong></td><td><strong>4I 1S</strong></td><td><strong>9I 1S</strong></td></tr>
+        <tr><td>Downgraded</td><td>0</td><td>0</td><td>3 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation.</strong> Three Gemini findings landed as Critical/regression and were demoted: C1 UDP one-way → I11 (Important, inherited); C2 vm-switch closed-fd → I10 (Important, inherited); C3 iptables multi-port leak → I8 (Important, inherited). All three are real bugs but none regress against the merge-base — the offending code did not exist in this repo before this PR, and it ships unchanged from <code>rancher-desktop@c8cd431</code> where it has been in production. No findings dropped as false positives — every claim verified against the code.</p>
+    <p><strong>Overall.</strong> Codex offered the highest signal-to-noise on the imported tree; Gemini the widest coverage of imported-code bugs but with severity calibration off; Claude the only agent that analyzed the PR&#39;s structural impact (overview, CI, dead Windows tree). All three were complementary — losing any one would have left a category uncovered.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <p>None this round. The &quot;regression vs. pre-existing&quot; gate fired correctly on Gemini&#39;s three Critical labels; the inheritance-from-upstream framing already lives in the report structure.</p>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>[repo] ADD a &quot;vendored upstream code&quot; calibration rule.</strong> When a PR imports source from another repository unchanged (filter-repo, copy-merge with provenance recorded), do not label bugs in that imported code as &quot;regression&quot; against the merge-base. Verify upstream contains the same bug at the recorded source SHA, then label as &quot;inherited from upstream&quot; and downgrade Critical to Important unless the bug crosses a security boundary or causes data loss in the target environment. Reason: the build was already running this code via clone-at-build-time, so behavior does not change with the import; severity should reflect production impact, not the merge-base diff.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
