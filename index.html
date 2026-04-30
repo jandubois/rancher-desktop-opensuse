@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deep Reviews — rancher-desktop-opensuse</title>
+<title>Reviews — rancher-desktop-opensuse</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body {
@@ -61,9 +61,23 @@ tr:hover td { background: #f0f4ff; }
 }
 .badge-md { background: #f3f4f6; color: #6b7280; }
 .badge-html { background: #dbeafe; color: #1e40af; }
+.badge-kind {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  margin-right: 0.4em;
+  vertical-align: middle;
+  background: #ede9fe;
+  color: #5b21b6;
+}
 .verdict-merge { background: #d1fae5; color: #065f46; }
 .verdict-fixes { background: #fef3c7; color: #92400e; }
 .verdict-rework { background: #fee2e2; color: #991b1b; }
+.verdict-clean { background: #d1fae5; color: #065f46; }
+.verdict-issues { background: #fef3c7; color: #92400e; }
+.verdict-critical { background: #fee2e2; color: #991b1b; }
 .verdict-unknown { background: #f3f4f6; color: #6b7280; }
 code {
   font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
@@ -84,6 +98,7 @@ code {
 <table>
 <thead><tr><th>Date</th><th>Review</th><th>Verdict</th></tr></thead>
 <tbody>
+<tr><td class="date">2026-04-30 <span class="time">13:42</span></td><td><a href="20260430-134246-pr-37.html">#37 — Add rdd-guest socket bridge for Windows Docker socket forwarding</a> <a href="20260430-134246-pr-37.html" class="badge-html">html</a> <a href="20260430-134246-pr-37.md" class="badge-md">md</a></td><td><span class="verdict verdict-fixes">Merge with fixes</span></td></tr>
 <tr><td class="date">2026-04-28 <span class="time">12:41</span></td><td><a href="20260428-124126-pr-38.html">#38 — Add guestagent and networking</a> <a href="20260428-124126-pr-38.html" class="badge-html">html</a> <a href="20260428-124126-pr-38.md" class="badge-md">md</a></td><td><span class="verdict verdict-fixes">Merge with fixes</span></td></tr>
 <tr><td class="date">2026-04-27 <span class="time">14:40</span></td><td><a href="20260427-144006-pr-37.html">#37 — Add rdd-guest socket bridge for Windows Docker socket forwarding</a> <a href="20260427-144006-pr-37.html" class="badge-html">html</a> <a href="20260427-144006-pr-37.md" class="badge-md">md</a></td><td><span class="verdict verdict-fixes">Merge with fixes</span></td></tr>
 </tbody>

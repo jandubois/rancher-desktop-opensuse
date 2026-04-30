@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Review: 20260430-134246-pr-37</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <style>
+/* Deep Review — canonical stylesheet
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Edit this file to change the look of all future reviews.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f8f9fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+main { max-width: 900px; margin: 0 auto; }
+h1 { font-size: 1.6rem; margin-bottom: 0.5rem; color: #111827; }
+h2 { font-size: 1.35rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #111827; border-bottom: 2px solid #e5e7eb; padding-bottom: 0.4rem; }
+h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.8rem; }
+hr { border: none; border-top: 2px solid #e5e7eb; margin: 2rem 0; }
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-size: 0.85em; background: #f3f4f6; padding: 0.15em 0.35em; border-radius: 4px; }
+
+/* Code blocks — override Prism defaults */
+pre { margin: 0 !important; border-radius: 0 0 8px 8px !important; }
+pre[class*="language-"] { font-size: 0.78rem; line-height: 1.3; }
+pre code { background: none; padding: 0; }
+
+/* Report metadata table */
+.meta-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.meta-table td { padding: 0.35rem 0.6rem; border: 1px solid #e5e7eb; vertical-align: top; }
+.meta-table td:first-child { font-weight: 600; width: 140px; background: #f9fafb; white-space: nowrap; }
+
+/* Cards — every section and finding lives in a card */
+.card { border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1.2rem; }
+.card-neutral { background: #f1f3f5; border: 1px solid #d5d9e0; }
+.card-critical { background: #ffeef0; border: 1px solid #f5c6cb; }
+.card-important { background: #fff0e0; border: 1px solid #f5d9a8; }
+.card-suggestion { background: #f0f6ff; border: 1px solid #c7d9f5; }
+.card-design { background: #f0faf4; border: 1px solid #b7e4c7; }
+
+/* Severity section headings — colored to match their cards */
+.section-critical { color: #9b1c1c; }
+.section-important { color: #92400e; }
+.section-suggestion { color: #1e40af; }
+.section-design { color: #065f46; }
+
+/* Agent attribution pills */
+.pill { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.15em 0.55em; border-radius: 999px; margin-right: 0.3em; vertical-align: middle; letter-spacing: 0.01em; }
+.pill-claude { background: #e9d5ff; color: #6b21a8; }
+.pill-codex { background: #d1fae5; color: #065f46; }
+.pill-gemini { background: #ffe4e6; color: #9f1239; }
+
+/* Finding titles */
+.finding-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; line-height: 1.4; }
+.finding-num { font-weight: 800; }
+
+/* Code file header — dark bar above each source code block.
+ * The filename is a GitHub permalink to the displayed line range.
+ * Text color is light gray (#adbac7) for the bar, green (#7ee787)
+ * for the hyperlink — matching GitHub's dark-mode file header. */
+.code-file-header { background: #2d333b; color: #adbac7; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-size: 0.75rem; padding: 0.4rem 0.9rem; border-radius: 8px 8px 0 0; margin-top: 0.8rem; }
+.code-file-header a { color: #7ee787; }
+.code-file-header a:hover { text-decoration: underline; }
+
+/* Line numbers (CSS counters) and line highlighting */
+.code-line { display: block; }
+.code-line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 3em;
+  margin-right: 0.8em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #636e7b;
+  border-right: 1px solid #3d4556;
+  user-select: none;
+}
+.line-hl { background: rgba(255, 199, 0, 0.18); }
+
+/* Pilcrow anchor links — hidden until parent is hovered */
+.pilcrow { color: #d1d5db; text-decoration: none; font-weight: 400; margin-left: 0.4em; opacity: 0; transition: opacity 0.15s; }
+h2:hover .pilcrow, h3:hover .pilcrow, .finding-title:hover .pilcrow { opacity: 1; }
+.pilcrow:hover { color: #6b7280; text-decoration: none; }
+
+/* Fix label */
+.fix-label { font-weight: 700; }
+
+/* Agent retro summary table */
+.retro-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.9rem; table-layout: fixed; }
+.retro-table th, .retro-table td { padding: 0.45rem 0.7rem; border: 1px solid #e5e7eb; text-align: left; }
+.retro-table th { background: #f3f4f6; font-weight: 600; }
+.retro-table tr:nth-child(even) { background: #f9fafb; }
+
+/* Supply-chain Summary table — first column gets breathing room,
+ * numeric middle columns center, header keeps its label on one line. */
+.summary-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.92rem; }
+.summary-table th, .summary-table td {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #d5d9e0;
+  vertical-align: top;
+  text-align: left;
+}
+.summary-table th { background: rgba(255, 255, 255, 0.65); font-weight: 600; white-space: nowrap; }
+.summary-table td:first-child { min-width: 11rem; white-space: nowrap; }
+.summary-table th:not(:first-child):not(:last-child),
+.summary-table td:not(:first-child):not(:last-child) { text-align: center; }
+
+/* Lists and paragraphs inside cards */
+.card ul, .card ol { margin: 0.4rem 0; padding-left: 1.5rem; }
+.card li { margin-bottom: 0.3rem; }
+.card p { margin: 0.5rem 0; }
+.card p:first-child { margin-top: 0; }
+
+/* Supply-chain issue rows — used by issueList for bullets that
+ * uniformly start with a `file:line` reference. The location renders
+ * in a dark bar above the description so the eye picks up the path
+ * separately from the prose. */
+.issue-list { margin: 0.6rem 0; }
+.issue-row {
+  margin-bottom: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.55);
+}
+.issue-loc {
+  background: #2d333b;
+  color: #adbac7;
+  padding: 0.3rem 0.7rem;
+  font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.issue-loc a { color: #7ee787; text-decoration: none; }
+.issue-loc a:hover { text-decoration: underline; }
+.issue-loc code { background: none; padding: 0; color: inherit; font-size: 1em; }
+.issue-desc { padding: 0.55rem 0.8rem; }
+.issue-desc code { font-size: 0.85em; }
+
+/* Verdict highlight in metadata table */
+.verdict { font-weight: 700; }
+
+/* GitHub reference tooltips — shown on hover for #N links */
+.gh-tooltip {
+  position: absolute;
+  background: #1f2328;
+  color: #e6edf3;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  max-width: 380px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.28);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.gh-tooltip-state {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  margin-right: 0.4em;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+.gh-state-open { background: #238636; color: #fff; }
+.gh-state-closed { background: #848d97; color: #fff; }
+.gh-state-merged { background: #8957e5; color: #fff; }
+.gh-tooltip-title { vertical-align: baseline; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  body { padding: 1rem 0.5rem; }
+  .card { padding: 0.9rem 1rem; }
+  pre code { font-size: 0.72rem; }
+}
+
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Deep Review: 20260430-134246-pr-37</h1>
+
+    <table class="meta-table">
+      <tr><td>Date</td><td>2026-04-30 13:42</td></tr>
+      <tr><td>Repo</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse">rancher-sandbox/rancher-desktop-opensuse</a></td></tr>
+      <tr><td>Round</td><td>2 (of target)</td></tr>
+      <tr><td>Author</td><td><a href="https://github.com/Nino-K">@Nino-K</a></td></tr>
+      <tr><td>PR</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/pull/37" class="gh-ref" data-title="Add rdd-guest socket bridge for Windows Docker socket forwarding" data-state="open" data-type="pr">#37</a> — Add rdd-guest socket bridge for Windows Docker socket forwarding</td></tr>
+      <tr><td>Commits</td><td><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/ed5f52e6a"><code>ed5f52e6a</code></a> Add rdd-guest socket bridge for Windows Docker socket forwarding</td></tr>
+      <tr><td>Reviewers</td><td><span class="pill pill-claude">Claude</span> Opus 4.7 (effort: xhigh), <span class="pill pill-codex">Codex</span> GPT 5.5 (effort: xhigh), <span class="pill pill-gemini">Gemini</span> 3.1 Pro (effort: default)</td></tr>
+      <tr><td>Verdict</td><td><span class="verdict">Merge with fixes</span> &mdash; address the tight Accept loop and the unaddressed <code>.gitignore</code>/godoc/module-drift suggestions before merging.</td></tr>
+      <tr><td>Wall-clock time</td><td><code>31 min 6 s</code></td></tr>
+    </table>
+
+    <hr>
+
+    <hr>
+    <h2 id="executive-summary">Executive Summary <a href="#executive-summary" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Round 2 of PR <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/issues/37" class="gh-ref" data-title="Add rdd-guest socket bridge for Windows Docker socket forwarding" data-state="open" data-type="pr">#37</a>. Since round 1 (commit <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/88abad6e4"><code>88abad6e4</code></a>) the author has addressed every must-fix from that review: the vsock listener now rejects connections whose peer CID is not <code>vsock.Host</code>, the unguarded <code>halfCloser</code> type assertions are gated with comma-ok, the committed ELF binary is gone from <code>git ls-files</code>, the TODO is separated from the <code>halfCloser</code> godoc with a blank line, and <code>handleConn</code> now takes the program&#39;s signal-aware <code>ctx</code> (used by the Docker dial). A <code>sync.WaitGroup</code> was also introduced inside <code>pipe()</code>.</p>
+    <p>The current code is materially safer. What remains is one new important finding the round-1 review missed (a tight <code>Accept</code> loop on persistent errors such as <code>EMFILE</code>), one prior-round suggestion that was started-but-not-finished (the WaitGroup is internal to <code>pipe()</code> so the program still abandons in-flight handlers at SIGTERM), one prior-round important whose binary half is fixed but whose <code>.gitignore</code> half is not, and a handful of smaller suggestions: the godoc convention nit @mook-as raised inline, a Moby-engine <code>ExecCondition</code> for service-file consistency with <code>docker.service</code>, dead-code cleanup in the EOF check, a port-contract comment, and the unaddressed Go-toolchain drift between <code>rdd-guest</code> and <code>rd-init</code>.</p>
+    <p>Structure: 0 critical, 1 important, 7 suggestions, plus design observations on the round-1→round-2 resolution path.</p>
+    </div>
+    <hr>
+    <h2 id="critical-issues" class="section-critical">Critical Issues <a href="#critical-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-critical">
+    <p>None.</p>
+    </div>
+    <hr>
+    <h2 id="important-issues" class="section-important">Important Issues <a href="#important-issues" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-important">
+      <div class="finding-title" id="I1">
+        <span class="finding-num">I1.</span> Tight loop on <code>Accept</code> errors <span class="pill pill-gemini">Gemini</span><a href="#I1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L38-L55">src/rdd-guest/main.go</a></div>
+      <pre data-start="38" data-line="43-50"><code class="language-go">		&lt;-ctx.Done()
+		l.Close()
+	}()
+
+	for {
+		conn, err := l.Accept()
+		if err != nil {
+			if ctx.Err() != nil {
+				return
+			}
+			log.Printf(&quot;rdd-guest: accept: %v&quot;, err)
+			continue
+		}
+		go handleConn(ctx, conn)
+	}
+}
+
+// TODO: once rancher-desktop-daemon is public, replace the inlined halfCloser,</code></pre>
+    <p>When <code>l.Accept()</code> returns a persistent non-shutdown error — <code>EMFILE</code> on file-descriptor exhaustion, <code>ENFILE</code> on system-wide exhaustion, <code>ENOMEM</code> under memory pressure — the loop logs and immediately retries with no backoff. The condition does not self-clear instantly: the kernel still refuses to allocate, so <code>Accept</code> returns the same error microseconds later. The result is a hot CPU loop that pegs a core and floods <code>journalctl</code> with thousands of identical lines per second until something else frees the fd or the process is restarted by an operator.</p>
+    <p><code>Restart=on-failure</code> does not help because the process never exits. The bridge runs as root, and <code>LimitNOFILE</code> for systemd services defaults relatively low, so this is a realistic production failure mode for any vsock service that holds a long-lived connection per Docker API call.</p>
+    <p>Fix: backoff briefly on accept errors so the process yields the CPU and the journal stays readable.</p>
+      <pre><code class="language-diff"> 		conn, err := l.Accept()
+ 		if err != nil {
+ 			if ctx.Err() != nil {
+ 				return
+ 			}
+ 			log.Printf(&quot;rdd-guest: accept: %v&quot;, err)
++			time.Sleep(100 * time.Millisecond)
+ 			continue
+ 		}</code></pre>
+    <p><code>(important, gap)</code></p>
+    </div>
+    <hr>
+    <h2 id="suggestions" class="section-suggestion">Suggestions <a href="#suggestions" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S1">
+        <span class="finding-num">S1.</span> In-flight connections aborted on shutdown — round 1 S5 unaddressed <span class="pill pill-claude">Claude</span><a href="#S1" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L37-L58">src/rdd-guest/main.go</a></div>
+      <pre data-start="37" data-line="42-53"><code class="language-go">	go func() {
+		&lt;-ctx.Done()
+		l.Close()
+	}()
+
+	for {
+		conn, err := l.Accept()
+		if err != nil {
+			if ctx.Err() != nil {
+				return
+			}
+			log.Printf(&quot;rdd-guest: accept: %v&quot;, err)
+			continue
+		}
+		go handleConn(ctx, conn)
+	}
+}
+
+// TODO: once rancher-desktop-daemon is public, replace the inlined halfCloser,
+// pipe(), and handleConn() here with a direct import of pkg/socketbridge, which
+// contains the implementations (HalfCloser interface, Pipe function).
+</code></pre>
+    <p>The author added a <code>sync.WaitGroup</code> inside <code>pipe()</code> (<a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L99-L114"><code>main.go:99-114</code></a>), which serializes the two <code>forward</code> goroutines — but the <code>handleConn</code> goroutines launched at line 51 are still untracked at the program level. When <code>SIGTERM</code> arrives, <code>&lt;-ctx.Done()</code> closes the listener, <code>Accept</code> errors, the loop returns, and <code>main</code> exits with active connections mid-<code>io.Copy</code>. The OS reaps their fds, peers see an abortive close instead of the bidirectional half-close drain <code>pipe</code> was carefully written to deliver. Long-running Docker calls (<code>exec</code>, <code>attach</code>, <code>events</code>, <code>logs -f</code>, image pulls) get truncated mid-stream.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L94-L119">src/go/guestagent/main.go</a></div>
+      <pre data-start="94" data-line="99-114"><code class="language-go">	}
+
+	if *enableContainerd &amp;&amp;
+		*enableDocker {
+		log.Fatal(&quot;requires either -docker or -containerd but not both.&quot;)
+	}
+
+	if err := runAgent(
+		*enableContainerd, *enableDocker, *enableKubernetes,
+		*containerdSock, *configPath, *k8sServiceListenerAddr,
+		*adminInstall, *k8sAPIPort, *tapIfaceIP,
+	); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Info(&quot;Rancher Desktop Agent Shutting Down&quot;)
+}
+
+func runAgent(
+	enableContainerd, enableDocker, enableKubernetes bool,
+	containerdSock, configPath, k8sServiceListenerAddr string,
+	adminInstall bool,
+	k8sAPIPort, tapIfaceIP string,
+) error {
+	groupCtx, cancel := context.WithCancel(context.Background())
+	defer cancel()</code></pre>
+    <p>The internal WaitGroup is the right primitive — it just needs to live one scope up.</p>
+      <pre><code class="language-diff"> func main() {
+     ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+     defer stop()
+     ...
++    var wg sync.WaitGroup
+     for {
+         conn, err := l.Accept()
+         if err != nil {
+             if ctx.Err() != nil {
++                wg.Wait()
+                 return
+             }
+             log.Printf(&quot;rdd-guest: accept: %v&quot;, err)
+             continue
+         }
+-        go handleConn(ctx, conn)
++        wg.Add(1)
++        go func() {
++            defer wg.Done()
++            handleConn(ctx, conn)
++        }()
+     }
+ }</code></pre>
+    <p>A short systemd <code>TimeoutStopSec=</code> in the unit caps the drain so a stuck connection cannot wedge <code>systemctl restart</code>.</p>
+    <p><code>(suggestion, gap)</code> — <code>round 1 S5 unaddressed</code>. Re-raised at the same severity per the Step 5 prior-round-suggestions gate. The round-1 framing (Gemini) named the same shape; the author&#39;s partial fix (WG inside <code>pipe</code>) suggests the issue was acknowledged.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S2">
+        <span class="finding-num">S2.</span> <code>.gitignore</code> still missing the <code>rdd-guest</code> build artifact — round 1 I1 partially unaddressed <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span><a href="#S2" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/.gitignore#L1-L4">.gitignore</a></div>
+      <pre data-start="1" data-line=""><code class="language-plaintext">/root/build/
+*.qcow2.xz
+*.raw.xz
+*.tar.xz</code></pre>
+    <p>The committed binary from round 1 is gone (<code>git ls-files src/rdd-guest/</code> returns only <code>go.mod</code>, <code>go.sum</code>, <code>main.go</code>), so the runtime concern is resolved. The companion fix — adding the path to <code>.gitignore</code> so a developer&#39;s <code>go build</code> inside <code>src/rdd-guest/</code> does not stage the artifact again — is still missing. Jan&#39;s PR comment explicitly called this out as the one item to address.</p>
+      <pre><code class="language-diff"> /root/build/
+ *.qcow2.xz
+ *.raw.xz
+ *.tar.xz
++/src/rd-init/rd-init
++/src/rdd-guest/rdd-guest</code></pre>
+    <p><code>(suggestion, gap)</code> — round 1 I1 demoted to suggestion: the binary itself is gone, only the ignore-rule remains.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S3">
+        <span class="finding-num">S3.</span> Package doc comment — godoc convention and Lima/WSL2 wording <span class="pill pill-claude">Claude</span><a href="#S3" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L1-L10">src/rdd-guest/main.go</a></div>
+      <pre data-start="1" data-line="1-5"><code class="language-go">// Package main is the rdd-guest agent that runs inside the Lima/WSL2 VM.
+// It listens on a vsock port and forwards connections to the Docker socket,
+// enabling the Windows host to reach /var/run/docker.sock via Hyper-V vsock.
+//
+package main
+
+import (
+	&quot;context&quot;
+	&quot;errors&quot;
+	&quot;io&quot;</code></pre>
+    <p>Two issues in the same block. The godoc convention for <code>main</code> packages is <code>// Command &lt;name&gt; is …</code>; <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rd-init/main.go#L1"><code>src/rd-init/main.go:1</code></a> already uses <code>// Command rd-init is a minimal implementation of cloud-init to start lima.</code>, so this PR diverges from local style. @mook-as raised this inline (<code>discussion_r3163651500</code>) and it remains unresolved. Separately, <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/rdd-guest.service#L4"><code>rdd-guest.service:4</code></a> is gated by <code>ConditionVirtualization=wsl</code> and <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/config.sh#L124"><code>config.sh:124</code></a> enables the service only inside the <code>wsl</code> profile, so &quot;Lima/WSL2&quot; oversells the supported runtime path (round 1 S1).</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rd-init/main.go#L1-L6">src/rd-init/main.go</a></div>
+      <pre data-start="1" data-line="1"><code class="language-go">// Command rd-init is a minimal implementation of cloud-init to start lima.
+// Note that this only implements `cloud-init-local`.
+package main
+
+import (
+	&quot;context&quot;</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/rdd-guest.service#L1-L9">root/usr/local/lib/systemd/system/rdd-guest.service</a></div>
+      <pre data-start="1" data-line="4"><code class="language-plaintext">[Unit]
+Description=Rancher Desktop Guest Socket Bridge
+Documentation=https://github.com/rancher-sandbox/rancher-desktop-daemon
+ConditionVirtualization=wsl
+
+[Service]
+ExecStart=/usr/local/bin/rdd-guest
+Restart=on-failure
+RestartSec=5s</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/config.sh#L119-L129">config.sh</a></div>
+      <pre data-start="119" data-line="124"><code class="language-bash">
+    # Enable network namespace
+    systemctl enable network-setup
+    systemctl enable rancher-desktop-guest-agent.service
+    systemctl enable wsl-proxy.service
+    systemctl enable rdd-guest.service
+    # Do not manage /tmp; that is managed by WSL.
+    mkdir -p /usr/local/lib/tmpfiles.d
+    touch /usr/local/lib/tmpfiles.d/fs-tmp.conf
+fi
+</code></pre>
+      <pre><code class="language-diff">-// Package main is the rdd-guest agent that runs inside the Lima/WSL2 VM.
+-// It listens on a vsock port and forwards connections to the Docker socket,
+-// enabling the Windows host to reach /var/run/docker.sock via Hyper-V vsock.
+-//
++// Command rdd-guest is the agent that runs inside the WSL2 VM. It listens on
++// a vsock port and forwards connections to the Docker socket, enabling the
++// Windows host to reach /var/run/docker.sock via Hyper-V vsock.
+ package main</code></pre>
+    <p><code>(suggestion, gap)</code> — supersedes round 1 S1.</p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S4">
+        <span class="finding-num">S4.</span> Dead <code>io.EOF</code> check in proxy loop <span class="pill pill-gemini">Gemini</span><a href="#S4" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L99-L112">src/rdd-guest/main.go</a></div>
+      <pre data-start="99" data-line="104-107"><code class="language-go">func pipe(a, b halfCloser) {
+	var wg sync.WaitGroup
+
+	forward := func(dst, src halfCloser) {
+		defer wg.Done()
+		_, err := io.Copy(dst, src)
+		if err != nil &amp;&amp; !errors.Is(err, io.EOF) {
+			log.Printf(&quot;rdd-guest: copy: %v&quot;, err)
+		}
+		_ = dst.CloseWrite()
+	}
+
+	wg.Add(2)
+	go forward(a, b)</code></pre>
+    <p><code>io.Copy</code>&#39;s contract guarantees that EOF on <code>src</code> is not surfaced as an error: &quot;A successful Copy returns err == nil, not err == EOF, because Copy is defined to read from src until EOF, it does not treat an EOF from Read as an error to be reported.&quot; So <code>errors.Is(err, io.EOF)</code> is unreachable under the documented contract; any non-nil <code>err</code> here represents a genuine fault (<code>ECONNRESET</code>, <code>EPIPE</code>, write error to a closed <code>dst</code>) worth logging. The check also drags in <code>errors</code> purely for this unreachable branch.</p>
+      <pre><code class="language-diff"> 		_, err := io.Copy(dst, src)
+-		if err != nil &amp;&amp; !errors.Is(err, io.EOF) {
++		if err != nil {
+ 			log.Printf(&quot;rdd-guest: copy: %v&quot;, err)
+ 		}</code></pre>
+    <p>After the change, the <code>errors</code> import becomes unused — drop it from the import block.</p>
+    <p><code>(suggestion, enhancement)</code></p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S5">
+        <span class="finding-num">S5.</span> Gate the bridge on the Moby engine <span class="pill pill-codex">Codex</span><a href="#S5" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/rdd-guest.service#L2-L12">root/usr/local/lib/systemd/system/rdd-guest.service</a></div>
+      <pre data-start="2" data-line="7"><code class="language-ini">Description=Rancher Desktop Guest Socket Bridge
+Documentation=https://github.com/rancher-sandbox/rancher-desktop-daemon
+ConditionVirtualization=wsl
+
+[Service]
+ExecStart=/usr/local/bin/rdd-guest
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=rancher-desktop.target</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/config.sh#L124"><code>config.sh:124</code></a> enables <code>rdd-guest.service</code> for every WSL image, but the bridge proxies <code>/var/run/docker.sock</code> — which only exists when <code>CONTAINER_ENGINE=moby</code>. The repo&#39;s convention for engine-conditional units is an <code>ExecCondition</code> against <code>${CONTAINER_ENGINE}</code>, e.g. <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/docker.service.d/conditional.conf#L3"><code>docker.service.d/conditional.conf:3</code></a>:</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/config.sh#L119-L129">config.sh</a></div>
+      <pre data-start="119" data-line="124"><code class="language-bash">
+    # Enable network namespace
+    systemctl enable network-setup
+    systemctl enable rancher-desktop-guest-agent.service
+    systemctl enable wsl-proxy.service
+    systemctl enable rdd-guest.service
+    # Do not manage /tmp; that is managed by WSL.
+    mkdir -p /usr/local/lib/tmpfiles.d
+    touch /usr/local/lib/tmpfiles.d/fs-tmp.conf
+fi
+</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/docker.service.d/conditional.conf#L1-L3">root/usr/local/lib/systemd/system/docker.service.d/conditional.conf</a></div>
+      <pre data-start="1" data-line="3"><code class="language-plaintext"># Only enable docker if desired
+[Service]
+ExecCondition=test ${CONTAINER_ENGINE} = moby</code></pre>
+      <pre><code class="language-ini">ExecCondition=test ${CONTAINER_ENGINE} = moby</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/buildkitd.service#L10-L11"><code>buildkitd.service:10-11</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/containerd.service.d/conditional.conf#L3"><code>containerd.service.d/conditional.conf:3</code></a> follow the same pattern with <code>containerd</code>. In containerd mode today, <code>rdd-guest</code> accepts a host-side connection, dials a non-existent Docker socket, logs a per-connection dial error, and closes — net effect is journal noise, not a functional bug. Adopting the project pattern is the cleaner fix.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/buildkitd.service#L5-L16">root/usr/local/lib/systemd/system/buildkitd.service</a></div>
+      <pre data-start="5" data-line="10-11"><code class="language-plaintext">Requires=buildkitd.socket
+StopPropagatedFrom=rancher-desktop.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/rancher-desktop
+ExecCondition=test ${CONTAINER_ENGINE} = containerd
+ExecStart=/usr/local/bin/buildkitd \
+  --oci-worker=false --containerd-worker=true \
+  --containerd-worker-addr=/run/k3s/containerd/containerd.sock \
+  --addr fd://
+</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/containerd.service.d/conditional.conf#L1-L3">root/usr/local/lib/systemd/system/containerd.service.d/conditional.conf</a></div>
+      <pre data-start="1" data-line="3"><code class="language-plaintext"># Only enable containerd if it is the selected container engine.
+[Service]
+ExecCondition=test ${CONTAINER_ENGINE} = containerd</code></pre>
+      <pre><code class="language-diff"> [Service]
++EnvironmentFile=-/etc/sysconfig/rancher-desktop
++ExecCondition=test ${CONTAINER_ENGINE} = moby
+ ExecStart=/usr/local/bin/rdd-guest
+ Restart=on-failure
+ RestartSec=5s</code></pre>
+    <p><code>(suggestion, enhancement)</code></p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S6">
+        <span class="finding-num">S6.</span> Pin the <code>vsockPort</code> contract in a comment <span class="pill pill-claude">Claude</span><a href="#S6" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L16-L29">src/rdd-guest/main.go</a></div>
+      <pre data-start="16" data-line="21-24"><code class="language-go">	&quot;syscall&quot;
+
+	&quot;github.com/mdlayher/vsock&quot;
+)
+
+const (
+	vsockPort     = 6660
+	dockerSockPath = &quot;/var/run/docker.sock&quot;
+)
+
+func main() {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+</code></pre>
+    <p><code>6660</code> must stay in lockstep with the dial port in <code>rancher-desktop-daemon</code>. Drift between the two ends produces a silent connect-refused on the Windows side with no in-tree breadcrumb pointing at the matching constant. Other vsock ports in this repo (<a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/networking/cmd/host/switch_windows.go#L46-L47"><code>src/go/networking/cmd/host/switch_windows.go:46-47</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/networking/cmd/network/setup_linux.go#L60-L61"><code>src/go/networking/cmd/network/setup_linux.go:60-61</code></a>) at least appear in pairs in the same repo; this one does not. A one-line comment naming the daemon-side counterpart shortens future debugging and survives the eventual <code>pkg/socketbridge</code> import.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/networking/cmd/host/switch_windows.go#L41-L52">src/go/networking/cmd/host/switch_windows.go</a></div>
+      <pre data-start="41" data-line="46-47"><code class="language-go">	virtualSubnet     string
+	staticPortForward arrayFlags
+)
+
+const (
+	vsockListenPort    = 6656
+	vsockHandshakePort = 6669
+	timeoutSeconds     = 5 * 60
+)
+
+func main() {
+	flag.BoolVar(&amp;debug, &quot;debug&quot;, false, &quot;enable additional debugging&quot;)</code></pre>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/networking/cmd/network/setup_linux.go#L55-L66">src/go/networking/cmd/network/setup_linux.go</a></div>
+      <pre data-start="55" data-line="60-61"><code class="language-go">}
+
+const (
+	nsenter                 = &quot;/usr/bin/nsenter&quot;
+	unshare                 = &quot;/usr/bin/unshare&quot;
+	vsockHandshakePort      = 6669
+	vsockDialPort           = 6656
+	defaultTapDevice        = &quot;eth0&quot;
+	WSLVeth                 = &quot;veth-rd-wsl&quot;
+	WSLVethIP               = &quot;192.168.143.2&quot;
+	namespaceVeth           = &quot;veth-rd-ns&quot;
+	namespaceVethIP         = &quot;192.168.143.1&quot;</code></pre>
+      <pre><code class="language-diff"> const (
++    // vsockPort must match the dial port used by rancher-desktop-daemon&#39;s
++    // socket bridge (cmd/rdd-host).
+     vsockPort     = 6660
+     dockerSockPath = &quot;/var/run/docker.sock&quot;
+ )</code></pre>
+    <p><code>(suggestion, enhancement)</code></p>
+    </div>
+    <div class="card card-suggestion">
+      <div class="finding-title" id="S7">
+        <span class="finding-num">S7.</span> Module diverges from <code>src/rd-init</code> on Go toolchain — round 1 S4 unaddressed<a href="#S7" class="pilcrow">&#182;</a>
+      </div>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/go.mod#L1-L8">src/rdd-guest/go.mod</a></div>
+      <pre data-start="1" data-line="3"><code class="language-go">module github.com/rancher-sandbox/rancher-desktop-opensuse/src/rdd-guest
+
+go 1.23.0
+
+require github.com/mdlayher/vsock v1.2.1
+
+require (
+	github.com/mdlayher/socket v0.5.1 // indirect</code></pre>
+    <p><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rd-init/go.mod#L3"><code>src/rd-init/go.mod:3</code></a> declares <code>go 1.25.0</code> and <code>golang.org/x/sys v0.43.0</code> (recently bumped in <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/69c42c26d"><code>69c42c26d</code></a> and <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/commit/7bc2b6722"><code>7bc2b6722</code></a>). Same builder image, same repo, two different toolchain floors. Dependabot raises bumps per module, so the next <code>x/sys</code> advisory will need two PRs instead of one.</p>
+      <div class="code-file-header"><a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rd-init/go.mod#L1-L8">src/rd-init/go.mod</a></div>
+      <pre data-start="1" data-line="3"><code class="language-plaintext">module github.com/rancher-sandbox/rancher-desktop-opensuse/src/rd-init
+
+go 1.25.0
+
+require (
+	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf
+	github.com/coreos/go-systemd/v22 v22.7.0
+	github.com/goccy/go-yaml v1.19.2</code></pre>
+      <pre><code class="language-diff">-go 1.23.0
++go 1.25.0
+...
+-	golang.org/x/sys v0.21.0 // indirect
++	golang.org/x/sys v0.43.0 // indirect</code></pre>
+    <p>After bumping, run <code>go mod tidy</code> to refresh <code>go.sum</code>.</p>
+    <p><code>(suggestion, gap)</code> — <code>round 1 S4 unaddressed</code>.</p>
+    </div>
+    <hr>
+    <h2 id="design-observations" class="section-design">Design Observations <a href="#design-observations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-design">
+    <h3 id="concerns">Concerns <a href="#concerns" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>(future)</strong> The inlined <code>halfCloser</code>/<code>pipe</code>/<code>handleConn</code> are explicitly temporary per the TODO at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L55-L57"><code>src/rdd-guest/main.go:55-57</code></a> — <code>pkg/socketbridge</code> from <code>rancher-desktop-daemon</code> replaces them once that repo opens. Three of the round-2 findings (S1 graceful shutdown, S4 dead <code>io.EOF</code> check, S6 port contract) live entirely inside this temporary code; fixing them is cheap and buys correctness for whatever interim window exists, but a reader might reasonably defer them until the upstream import lands. Worth a tracking issue so the cleanup actually happens. <span class="pill pill-claude">Claude</span></li>
+      <li><strong>(in-scope)</strong> The systemd unit still has no <code>After=</code> ordering. Sibling units (<code>wsl-proxy.service</code>, <code>rancher-desktop-guest-agent.service</code>) lack ordering hints too, so this matches local convention. Failure mode is benign — an early connection logs a dial error and the Windows side retries — but <code>After=docker.socket</code> would let the first boot connection succeed cleanly when Moby is selected. Skip if the Windows-side retry already absorbs this. (Carried from round 1; unchanged.)</li>
+    </ul>
+    <h3 id="strengths">Strengths <a href="#strengths" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>(in-scope)</strong> The peer-CID check at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L72-L76"><code>src/rdd-guest/main.go:72-76</code></a> correctly enforces &quot;only the Windows host may proxy through this bridge&quot;; the inline comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L65-L68"><code>main.go:65-68</code></a> documents <em>why</em> the check is there (WSL2 vsock-namespace sharing across distros) — a model of &quot;explain the trust assumption, not just the mechanic.&quot; <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span></li>
+      <li><strong>(in-scope)</strong> Comma-ok on both <code>halfCloser</code> assertions plus a per-side log including <code>vsockConn.RemoteAddr()</code> makes a future <code>mdlayher/vsock</code> wrapping change a graceful per-connection drop rather than a process-wide panic. <span class="pill pill-claude">Claude</span></li>
+      <li><strong>(in-scope)</strong> <code>pipe()</code> propagates EOF with <code>CloseWrite()</code> per direction rather than tearing both sides down on first EOF — the correct behavior for HTTP-over-Unix Docker traffic with hijacked streams (<code>docker exec -it</code>, <code>docker attach</code>). The internal WaitGroup is now a clean replacement for the chan-of-error pattern. <span class="pill pill-claude">Claude</span> <span class="pill pill-gemini">Gemini</span></li>
+      <li><strong>(in-scope)</strong> Dialing Docker per accepted connection rather than holding a long-lived shared connection means a Docker restart does not require restarting the bridge. <span class="pill pill-codex">Codex</span></li>
+      <li><strong>(in-scope)</strong> Defense in depth: <code>ConditionVirtualization=wsl</code> in the unit prevents the bridge from starting on macOS/Lima images even though the binary is copied into <code>/usr/local/bin</code> for all profiles. <span class="pill pill-codex">Codex</span></li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="testing-assessment">Testing Assessment <a href="#testing-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>No tests added. <code>src/rd-init/</code> continues without a test suite, so this matches existing convention rather than regressing it. Codex ran <code>go test ./...</code> in <code>src/rdd-guest</code> (passes, no test files) and smoke-built for <code>linux/amd64</code> and <code>linux/arm64</code>. Verification today is by booting a WSL image. Highest-value scenarios if a regression slipped in:</p>
+    <ol>
+      <li><strong>Vsock peer-CID rejection</strong> (highest risk if the round-1 fix regresses): dial from CID 1 (loopback inside the VM) and verify the connection is rejected before <code>rdd-guest</code> dials docker.sock.</li>
+      <li><strong>Half-close on hijacked streams</strong>: <code>docker exec -it</code> from the host, exercising both <code>CloseWrite</code> paths in <code>pipe()</code>.</li>
+      <li><strong>Graceful shutdown under load</strong> (covers S1): <code>systemctl restart rdd-guest</code> while a <code>docker logs -f</code> is in flight; the client should see clean EOF, not a connection reset.</li>
+      <li><strong>Accept under fd pressure</strong> (covers I1): exhaust fds in the bridge process and verify it does not hot-loop.</li>
+      <li><strong>Engine-aware activation</strong> (covers S5): switch to containerd and confirm the bridge does not produce repeated dial-failure entries in the journal.</li>
+      <li><strong>Listener restart</strong>: <code>systemctl restart rdd-guest</code> should rebind port 6660 cleanly with no stale-socket error.</li>
+    </ol>
+    </div>
+    <hr>
+    <h2 id="documentation-assessment">Documentation Assessment <a href="#documentation-assessment" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li>The package doc at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L1-L5"><code>src/rdd-guest/main.go:1-5</code></a> still says &quot;Lima/WSL2&quot; and starts with <code>Package main is the rdd-guest agent</code> rather than the godoc-conventional <code>Command rdd-guest is …</code> (S3).</li>
+      <li>The <code>Documentation=</code> URL in <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/rdd-guest.service#L3"><code>rdd-guest.service:3</code></a> still points at <code>rancher-desktop-daemon</code>. Per the author&#39;s reply on <code>discussion_r3162930815</code>, this is intentional (the daemon side is the more important piece of the bridge); see Acknowledged Limitations.</li>
+      <li>The <code>handleConn</code> doc comment at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L65-L68"><code>main.go:65-68</code></a> is genuinely useful &quot;why&quot; documentation — it captures the WSL2 trust-model reasoning behind the CID check.</li>
+      <li>No README under <code>src/rdd-guest/</code> explains why a separate vsock bridge is needed alongside <code>wsl-proxy.service</code>. The TODO at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L55"><code>main.go:55</code></a> is a useful pointer to the eventual replacement, but a one-paragraph note for future maintainers would be cheap to add.</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="commit-structure">Commit Structure <a href="#commit-structure" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <p>Single commit, message accurate, scope coherent. Nothing to flag.</p>
+    </div>
+    <hr>
+    <h2 id="acknowledged-limitations">Acknowledged Limitations <a href="#acknowledged-limitations" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><strong>TODO comment</strong> (<a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/rdd-guest/main.go#L55-L57"><code>src/rdd-guest/main.go:55-57</code></a>): the inlined <code>halfCloser</code>/<code>pipe</code>/<code>handleConn</code> are intentionally temporary; cleanup is tied to <code>rancher-desktop-daemon</code> becoming public so <code>pkg/socketbridge</code> can be imported. The author is aware that this code will be deleted; depth-of-test investment scales accordingly.</li>
+      <li><em></em><code>Documentation=</code> URL<em></em> (<a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/rdd-guest.service#L3"><code>rdd-guest.service:3</code></a>, prior-round S3): @mook-as suggested pointing at this repo now that the source lives here. The author replied on <code>discussion_r3162930815</code> that the daemon side is the more important piece of the bridge and elected to leave the URL pointing at <code>rancher-desktop-daemon</code>. Treat as resolved by author response; do not re-raise.</li>
+      <li><em></em><code>defer l.Close()</code> thread<em></em> (<code>discussion_r3157388765</code> → <code>_r3162971660</code> → <code>_r3163247910</code>): the author removed the redundant defer so only the <code>&lt;-ctx.Done()</code> goroutine path closes the listener; the duplicate close path mook-as flagged is gone.</li>
+      <li><strong>PR-author note</strong> (round-1 review response): Jan flagged the binary-in-source-tree as the one real concern from round 1&#39;s external review. The binary is removed; the <code>.gitignore</code> half is still open (S2).</li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="unresolved-feedback">Unresolved Feedback <a href="#unresolved-feedback" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <ul>
+      <li><em></em><code>discussion_r3163651500</code><em></em> — @mook-as: &quot;That should be <code>Command rdd-guest is…</code>&quot;. Captured as S3.</li>
+      <li><strong>PR-author note</strong> about <code>.gitignore</code>: not addressed in any subsequent commit. Captured as S2.</li>
+      <li><em></em><code>discussion_r3163274099</code><em></em> — @mook-as: &quot;Logging <code>conn.RemoteAddr</code> here might be good too. Same with the <code>dockerConn</code> one.&quot; The author added <code>RemoteAddr</code> logging on the <code>CloseWrite</code> capability-mismatch paths (lines 87, 92), but the Docker-dial-failure log at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/src/go/guestagent/main.go#L80"><code>main.go:80</code></a> still does not include the vsock client&#39;s address. Minor; not separately flagged. <span class="pill pill-gemini">Gemini</span></li>
+    </ul>
+    </div>
+    <hr>
+    <h2 id="agent-performance-retro">Agent Performance Retro <a href="#agent-performance-retro" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="claude"><span class="pill pill-claude">Claude</span> <a href="#claude" class="pilcrow">&#182;</a></h3>
+    <p>Caught the round-1 S5 (graceful shutdown) being only half-fixed — the WaitGroup-inside-<code>pipe</code> change is the kind of half-step easy to mistake for a complete fix, and reading both rounds side-by-side was the only way to spot it. Also surfaced the godoc-convention nit @mook-as raised inline (round 1 missed this because the inline review hadn&#39;t happened yet) and noticed the <code>.gitignore</code> follow-up was left undone after the binary was removed. Calibration on the graceful-shutdown finding was a half-step hot — Important rather than Suggestion in the original output; consolidated to Suggestion to honor the round-1 prior-round-suggestions gate (it was a Suggestion in round 1 and the surrounding code did not materially change at the program level). Did not catch the tight Accept loop or the dead <code>errors.Is(err, io.EOF)</code> check.</p>
+    <h3 id="codex"><span class="pill pill-codex">Codex</span> <a href="#codex" class="pilcrow">&#182;</a></h3>
+    <p>One finding (S5 — Moby <code>ExecCondition</code>) but a strong one: it required reading three sibling unit files (<code>docker.service.d/conditional.conf</code>, <code>buildkitd.service</code>, <code>containerd.service.d/conditional.conf</code>) to recognise the project pattern and apply it to the new unit. This is the kind of cross-file consistency check <code>git blame</code>-aware agents do well. Verified locally with <code>go test ./...</code> and <code>linux/amd64</code>/<code>linux/arm64</code> smoke builds, more verification than the other two. Underweight overall — missed the tight Accept loop and the round-1 prior-round suggestions still open in the diff.</p>
+    <h3 id="gemini"><span class="pill pill-gemini">Gemini</span> <a href="#gemini" class="pilcrow">&#182;</a></h3>
+    <p>Surfaced the new Important finding of this round (tight <code>Accept</code> loop on <code>EMFILE</code>/<code>ENFILE</code>) — a real production-stability concern none of the three agents caught in round 1. Also caught the dead <code>io.EOF</code> check, citing the relevant <code>io.Copy</code> contract sentence. The <code>.gitignore</code> finding was raised at Important rather than Suggestion, an over-call — the binary is already removed, so this is a hygiene rule, not a runtime concern. Skipped <code>git blame</code> per its known quota behavior, which did not affect this review since the changed lines are mostly new. Strongest agent on the program-correctness axis again, lighter on documentation, hygiene, and project conventions.</p>
+    <h3 id="summary">Summary <a href="#summary" class="pilcrow">&#182;</a></h3>
+    <table class="retro-table">
+      <thead><tr><th></th><th><span class="pill pill-claude">Claude</span> Opus 4.7</th><th><span class="pill pill-codex">Codex</span> GPT 5.5</th><th><span class="pill pill-gemini">Gemini</span> 3.1 Pro</th></tr></thead>
+      <tbody>
+        <tr><td>Duration</td><td>23m 17s</td><td>5m 03s</td><td>2m 56s</td></tr>
+        <tr><td>Findings</td><td>4S</td><td>1S</td><td>1I 2S</td></tr>
+        <tr><td>Tool calls</td><td>44 (Bash 24, Read 20)</td><td>66 (shell 66)</td><td>10 (run<em>shell</em>command 7, grep<em>search 1, list</em>directory 1)</td></tr>
+        <tr><td>Design observations</td><td>3</td><td>2</td><td>2</td></tr>
+        <tr><td>False positives</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Unique insights</td><td>3</td><td>1</td><td>2</td></tr>
+        <tr><td>Files reviewed</td><td>6</td><td>6</td><td>6</td></tr>
+        <tr><td>Coverage misses</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td><strong>Totals</strong></td><td><strong>4S</strong></td><td><strong>1S</strong></td><td><strong>1I 2S</strong></td></tr>
+        <tr><td>Downgraded</td><td>1 (I→S)</td><td>0</td><td>1 (I→S)</td></tr>
+        <tr><td>Dropped</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Reconciliation:</strong></p>
+    <ul>
+      <li>Claude raised graceful-shutdown at Important; consolidated to Suggestion (S1) to match round-1 severity per the prior-round-suggestions gate.</li>
+      <li>Gemini raised <code>.gitignore</code> at Important; consolidated to Suggestion (S2) since the binary itself is removed and only the ignore-rule remains.</li>
+    </ul>
+    <p>Gemini was the most valuable agent for this round — the tight Accept loop is the only round-2 finding that genuinely changes whether the PR is merge-safe under load. Claude provided the broadest cross-round coverage (catching what the round-1→round-2 partial fixes left behind) and surfaced the godoc-convention nit. Codex&#39;s pattern-matching across sibling units produced the cleanest engine-gating suggestion, but its single-finding output left several round-1 prior suggestions unflagged.</p>
+    </div>
+    <hr>
+    <h2 id="review-process-notes">Review Process Notes <a href="#review-process-notes" class="pilcrow">&#182;</a></h2>
+
+    <div class="card card-neutral">
+    <h3 id="skill-improvements">Skill improvements <a href="#skill-improvements" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Add a review dimension on tight retry loops.</strong> When a PR introduces a <code>for { … }</code> loop that calls a syscall-backed accept/read/recv with <code>continue</code> on error, the prompt should ask: does the error class self-clear instantly, and if not, will this hot-loop the CPU? <code>EMFILE</code>, <code>ENFILE</code>, <code>ENOMEM</code>, and persistent <code>EAGAIN</code> on a non-blocking listener are the textbook cases. Naming the pattern in <code>dimensions.md</code> raises the chance future agents flag it without having to reason from first principles each time. <em>Why:</em> Two of three agents missed this on PR <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/issues/37" class="gh-ref" data-title="Add rdd-guest socket bridge for Windows Docker socket forwarding" data-state="open" data-type="pr">#37</a> round 2 even though the loop is six lines and the failure mode (CPU peg + journal flood) is well-known. A named dimension turns a &quot;you have to know to look for it&quot; issue into a &quot;the prompt asks about it&quot; issue.</li>
+    </ul>
+    <h3 id="repo-context-updates">Repo context updates <a href="#repo-context-updates" class="pilcrow">&#182;</a></h3>
+    <ul>
+      <li><strong>Document the engine-conditional unit pattern.</strong> When a systemd unit serves a backend that is engine-gated (<code>docker</code>/<code>moby</code> vs <code>containerd</code>), the convention in this repo is <code>EnvironmentFile=-/etc/sysconfig/rancher-desktop</code> plus <code>ExecCondition=test ${CONTAINER_ENGINE} = &lt;engine&gt;</code>. Examples live at <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/docker.service.d/conditional.conf#L3"><code>docker.service.d/conditional.conf:3</code></a>, <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/containerd.service.d/conditional.conf#L3"><code>containerd.service.d/conditional.conf:3</code></a>, and <a href="https://github.com/rancher-sandbox/rancher-desktop-opensuse/blob/ed5f52e6a09306f52f594bdfb3efb052a74123e5/root/usr/local/lib/systemd/system/buildkitd.service#L10-L11"><code>buildkitd.service:10-11</code></a>. Reviewers of new WSL-side units should check whether the new unit serves an engine-specific resource and apply the same pattern; running an engine-specific bridge under the wrong engine produces journal noise and wasted listeners. <em>Why:</em> This pattern is consistent enough across the repo to count as project convention, but it is invisible from a single-file diff. Codifying it lets future reviews flag the gap at Suggestion without re-deriving the pattern from scratch.</li>
+    </ul>
+    </div>
+  </main>
+  <script>window.Prism = window.Prism || {}; Prism.manual = true;</script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-diff.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script>
+/* Deep Review — Prism initialization and line-number wrapping.
+ * Inlined into each generated HTML file by the beautify-review skill.
+ * Runs synchronously at the end of <body> — no event listeners.
+ *
+ * Prerequisite: a preceding <script> must set Prism.manual = true
+ * before the Prism core <script> loads.
+ */
+
+Prism.highlightAll();
+
+document.querySelectorAll('pre[data-start]').forEach(function(pre) {
+  var startLine = parseInt(pre.getAttribute('data-start'), 10) || 1;
+  var hlAttr = pre.getAttribute('data-line') || '';
+
+  /* Parse data-line into a Set of line numbers to highlight.
+   * Accepts comma-separated values: "75,76,77" or ranges: "75-84". */
+  var hlLines = new Set();
+  hlAttr.split(',').forEach(function(part) {
+    part = part.trim();
+    if (!part) return;
+    var m = part.match(/^(\d+)-(\d+)$/);
+    if (m) {
+      for (var i = parseInt(m[1], 10); i <= parseInt(m[2], 10); i++) hlLines.add(i);
+    } else {
+      hlLines.add(parseInt(part, 10));
+    }
+  });
+
+  var code = pre.querySelector('code');
+  if (!code) return;
+
+  var html = code.innerHTML;
+  var lines = html.split('\n');
+  /* Strip a trailing empty line that Prism sometimes leaves. */
+  if (lines.length > 0 && lines[lines.length - 1].trim() === '') lines.pop();
+
+  var wrapped = lines.map(function(line, idx) {
+    var lineNum = startLine + idx;
+    var cls = 'code-line' + (hlLines.has(lineNum) ? ' line-hl' : '');
+    return '<span class="' + cls + '">' + line + '</span>';
+  });
+
+  /* Join with '' (empty string) — NOT '\n'.
+   * Inside <pre>, newlines are literal whitespace. Since .code-line uses
+   * display: block, joining with '\n' produces double line spacing. */
+  code.innerHTML = wrapped.join('');
+  pre.style.counterReset = 'line ' + (startLine - 1);
+});
+
+/* GitHub reference tooltips — show title and state on hover for #N links.
+ * Links must have class="gh-ref" and data-title set by the generator. */
+document.querySelectorAll('a.gh-ref[data-title]').forEach(function(link) {
+  var tip = null;
+
+  link.addEventListener('mouseenter', function() {
+    if (tip) return;
+    tip = document.createElement('div');
+    tip.className = 'gh-tooltip';
+
+    var state = link.getAttribute('data-state') || '';
+    var type = link.getAttribute('data-type') || 'issue';
+    var label = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase();
+
+    var pill = document.createElement('span');
+    pill.className = 'gh-tooltip-state gh-state-' + state;
+    pill.textContent = label + (type === 'pr' ? ' PR' : '');
+
+    var title = document.createElement('span');
+    title.className = 'gh-tooltip-title';
+    title.textContent = link.getAttribute('data-title');
+
+    tip.appendChild(pill);
+    tip.appendChild(title);
+    document.body.appendChild(tip);
+
+    var rect = link.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = rect.left + window.scrollX;
+    var top = rect.top + window.scrollY - th - 8;
+
+    if (left + tw > window.innerWidth - 12) left = window.innerWidth - tw - 12;
+    if (left < 4) left = 4;
+    if (top < window.scrollY + 4) top = rect.bottom + window.scrollY + 8;
+
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+
+  link.addEventListener('mouseleave', function() {
+    if (tip) { tip.remove(); tip = null; }
+  });
+});
+
+  </script>
+</body>
+</html>
