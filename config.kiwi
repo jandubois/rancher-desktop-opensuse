@@ -20,6 +20,9 @@
   <preferences profiles="lima">
     <type image="oem" format="qcow2" filesystem="ext4" fsmountoptions="x-systemd.growfs"
       firmware="efi">
+      <!-- Reserve root-filesystem free space the overlay tool fills at build
+           time with Rancher Desktop assets (systemd units, nerdctl). -->
+      <size unit="M" additive="true">512</size>
       <oemconfig>
         <!--
           Disable Kiwi's built-in partition resizing; that is very generic and
